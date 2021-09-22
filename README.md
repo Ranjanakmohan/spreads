@@ -1,0 +1,7 @@
+## Spreads
+
+Spreads
+
+#### License
+
+MIT
