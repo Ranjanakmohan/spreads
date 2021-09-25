@@ -1,5 +1,6 @@
-import frappe
+import frappe, json
 from erpnext.stock.stock_ledger import get_previous_sle
+
 @frappe.whitelist()
 def get_rate(item_code, warehouse, based_on,price_list):
     time = frappe.utils.now_datetime().time()
@@ -39,19 +40,20 @@ def get_rate(item_code, warehouse, based_on,price_list):
     return rate, balance
 
 @frappe.whitelist()
-def set_available_qty(self):
+def set_available_qty(items):
+    data = json.loads(items)
     time = frappe.utils.now_datetime().time()
     date = frappe.utils.now_datetime().date()
-    for d in self.get('raw_material'):
+    for d in data:
         previous_sle = get_previous_sle({
-            "item_code": d.item_code,
-            "warehouse": d.warehouse,
+            "item_code": d['item_code_raw_material'],
+            "warehouse": d['warehouse'],
             "posting_date": date,
             "posting_time": time
         })
-        # get actual stock at source warehouse
-        d.available_qty = previous_sle.get("qty_after_transaction") or 0
-
+        d['available_qty'] = previous_sle.get("qty_after_transaction") or 0
+    print(data)
+    return data
 @frappe.whitelist()
 def filter_item(doctype, txt, searchfield, start, page_len, filters):
     return frappe.db.sql("""
@@ -69,3 +71,15 @@ def filter_item(doctype, txt, searchfield, start, page_len, filters):
         'start': start,
         'page_len': page_len
     })
+
+
+@frappe.whitelist()
+def on_submit_q(doc, method):
+    if doc.create_new_product_bundle and not doc.parent_item:
+        frappe.throw("Please select Parent Item")
+
+    if not doc.product_bundle and doc.create_new_product_bundle and doc.parent_item:
+        obj = {
+            "doctype": "Product Bundle",
+            "parent_item": doc.parent_item,
+        }

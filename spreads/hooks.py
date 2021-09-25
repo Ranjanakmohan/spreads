@@ -101,6 +101,9 @@ doc_events = {
 	},
 	"Delivery Note": {
 		"on_submit": "spreads.doc_events.delivery_note.on_submit_dn",
+	},
+	"Quotation": {
+		"on_submit": "spreads.doc_events.delivery_note.on_submit_q",
 	}
 }
 
@@ -179,4 +182,31 @@ user_data_fields = [
 # auth_hooks = [
 # 	"spreads.auth.validate"
 # ]
-
+fixtures = [
+    {
+        "doctype": "Custom Field",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                    "Quotation-update_available_stock",
+                    "Quotation-section_break_100",
+                    "Quotation-rate_of_materials_based_on",
+                    "Quotation-section_break_200",
+                    "Quotation-raw_material",
+                    "Delivery Note-raw_material",
+                    "Item-assembled_item",
+                    "Sales Order-project_code",
+                    "Sales Invoice-raw_material",
+                    "Sales Order-raw_material",
+                    "Cost Center-sales_order",
+                    "Global Defaults-default_cost_center",
+                    "Sales Order-new_project_code",
+                    "Sales Order-existing_project_code",
+                    "Quotation-price_list",
+				]
+			]
+		]
+	}
+]
