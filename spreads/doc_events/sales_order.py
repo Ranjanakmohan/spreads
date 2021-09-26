@@ -11,7 +11,7 @@ def generate_cc(name):
             "sales_order": name
         }
         cc = frappe.get_doc(obj).insert()
-        frappe.db.sql(""" UPDATE `tabSales Order` SET project_code=%s WHERE name=%s""",(cc.name, name))
+        frappe.db.sql(""" UPDATE `tabSales Order` SET cost_center=%s WHERE name=%s""",(cc.name, name))
         frappe.db.commit()
         return True
     else:

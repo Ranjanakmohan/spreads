@@ -25,7 +25,7 @@ def get_items(doc):
         }
         if doc.items[0].sales_order:
             so = frappe.db.sql(""" SELECT * FROM `tabSales Order` WHERE name=%s""",(doc.items[0].sales_order),as_dict=1 )
-            cost_center = so[0].project_code if len(so) > 0 and so[0].project_code else ""
+            cost_center = so[0].cost_center if len(so) > 0 and so[0].cost_center else ""
         if cost_center:
             obj['cost_center'] = cost_center
         items.append(obj)

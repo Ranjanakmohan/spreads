@@ -192,7 +192,7 @@ fixtures = [
                     "Quotation-raw_material",
                     "Delivery Note-raw_material",
                     "Item-assembled_item",
-                    "Sales Order-project_code",
+                    "Sales Order-cost_center",
                     "Sales Invoice-raw_material",
                     "Sales Order-raw_material",
                     "Cost Center-sales_order",
@@ -201,6 +201,9 @@ fixtures = [
                     "Sales Order-existing_project_code",
                     "Quotation-price_list",
                     "Sales Order-generate_project_id",
+                    "Sales Order-rate_of_materials_based_on",
+                    "Sales Order-update_available_stock",
+                    "Sales Order-price_list",
 				]
 			]
 		]

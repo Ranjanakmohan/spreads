@@ -98,6 +98,14 @@ cur_frm.cscript.product_bundle = function (frm,cdt,cdn) {
     }
 }
 cur_frm.cscript.onload_post_render = function (frm,cdt, cdn) {
+     cur_frm.set_query("item_code_raw_material", "raw_material", () => {
+            return {
+                    filters: {
+                        is_stock_item: 1
+                }
+
+            }
+        })
     frappe.db.get_single_value('Stock Settings', 'default_warehouse')
         .then(ans => {
             console.log("TEST")
@@ -108,14 +116,7 @@ cur_frm.cscript.onload_post_render = function (frm,cdt, cdn) {
         cur_frm.refresh_field("raw_material")
     }
         })
-         cur_frm.set_query("item_code_raw_material", "raw_material", () => {
-            return {
-                    filters: {
-                        is_stock_item: 1
-                }
 
-            }
-        })
 
 
 
