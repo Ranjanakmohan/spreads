@@ -34,6 +34,7 @@ app_license = "MIT"
 doctype_js = {
 	"Quotation" : "public/js/quotation.js",
 	"Sales Order" : "public/js/sales_order.js",
+	"Item" : "public/js/item.js",
 }
 # doctype_list_js = {"doctype" : "public/js/doctype_list.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
@@ -103,7 +104,7 @@ doc_events = {
 		"on_submit": "spreads.doc_events.delivery_note.on_submit_dn",
 	},
 	"Quotation": {
-		"on_submit": "spreads.doc_events.delivery_note.on_submit_q",
+		"on_submit": "spreads.doc_events.quotation.on_submit_q",
 	}
 }
 

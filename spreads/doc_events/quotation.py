@@ -58,7 +58,7 @@ def set_available_qty(items):
 def filter_item(doctype, txt, searchfield, start, page_len, filters):
     return frappe.db.sql("""
         SELECT name, description, item_group FROM `tabItem` 
-        WHERE (item_group='Raw Material' or assembled_item = 1) AND ({key} LIKE %(txt)s)  
+        WHERE is_stock_item = 1 AND ({key} LIKE %(txt)s)  
         ORDER BY
             IF(LOCATE(%(_txt)s, name), LOCATE(%(_txt)s, name), 99999),
             name
