@@ -94,9 +94,6 @@ doctype_js = {
 # Hook on document methods and events
 
 doc_events = {
-	"Sales Order": {
-		"on_submit": "spreads.doc_events.sales_order.on_submit_so",
-	},
 	"Sales Invoice": {
 		"on_submit": "spreads.doc_events.sales_invoice.on_submit_si",
 	},
