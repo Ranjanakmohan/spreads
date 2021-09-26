@@ -101,7 +101,7 @@ cur_frm.cscript.onload_post_render = function (frm,cdt, cdn) {
          cur_frm.set_query("item_code_raw_material", "raw_material", () => {
         return {
                 filters: {
-                    is_stock_item: 0
+                    is_stock_item: 1
             }
 
         }
