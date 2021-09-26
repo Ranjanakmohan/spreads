@@ -200,6 +200,7 @@ fixtures = [
                     "Sales Order-new_project_code",
                     "Sales Order-existing_project_code",
                     "Quotation-price_list",
+                    "Sales Order-generate_project_id",
 				]
 			]
 		]
