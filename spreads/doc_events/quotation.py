@@ -71,15 +71,3 @@ def filter_item(doctype, txt, searchfield, start, page_len, filters):
         'start': start,
         'page_len': page_len
     })
-
-
-@frappe.whitelist()
-def on_submit_q(doc, method):
-    if doc.create_new_product_bundle and not doc.parent_item:
-        frappe.throw("Please select Parent Item")
-
-    if not doc.product_bundle and doc.create_new_product_bundle and doc.parent_item:
-        obj = {
-            "doctype": "Product Bundle",
-            "parent_item": doc.parent_item,
-        }
