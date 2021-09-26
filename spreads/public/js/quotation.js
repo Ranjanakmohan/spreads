@@ -1,18 +1,4 @@
-cur_frm.cscript.refresh = function (frm,cdt, cdn) {
-    cur_frm.set_query("item_code_raw_material", "raw_material", () => {
-    return {
-        query: 'spreads.doc_events.quotation.filter_item',
 
-    }
-})
-    cur_frm.set_query('parent_item', () => {
-        return {
-            filters: {
-                is_stock_item: 0
-            }
-        }
-    })
-}
 cur_frm.cscript.item_code_raw_material = function (frm,cdt, cdn) {
     var d = locals[cdt][cdn]
     if(d.item_code_raw_material){
@@ -110,4 +96,15 @@ cur_frm.cscript.product_bundle = function (frm,cdt,cdn) {
                }
             })
     }
+}
+cur_frm.cscript.onload_post_render = function (frm,cdt, cdn) {
+         cur_frm.set_query("item_code_raw_material", "raw_material", () => {
+        return {
+                filters: {
+                    is_stock_item: 0
+            }
+
+        }
+    })
+
 }

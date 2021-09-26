@@ -1,4 +1,4 @@
-cur_frm.cscript.refresh = function(){
+cur_frm.cscript.onload_post_render = function(){
 
        cur_frm.set_query('project_code', () => {
         return {
