@@ -4,12 +4,10 @@ from frappe.utils import cint, flt, cstr, get_link_to_form, nowtime
 from erpnext.accounts.utils import get_fiscal_year
 @frappe.whitelist()
 def on_submit_si(doc, method):
-    if doc.update_stock and not doc.is_return:
+    if doc.update_stock:
         from erpnext.stock.stock_ledger import make_sl_entries
         make_sl_entries(get_items(doc, doc.is_return), False, False)
         make_gl_entries(doc)
-    if doc.update_stock and not doc.is_return:
-        make_sl_entries(get_items(doc, doc.is_return), False, False)
 def get_items(self, is_return):
     items = []
     for d in self.raw_material:
