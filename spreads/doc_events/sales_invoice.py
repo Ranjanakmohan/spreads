@@ -6,7 +6,7 @@ from erpnext.accounts.utils import get_fiscal_year
 def on_submit_si(doc, method):
     if doc.update_stock and not doc.is_return:
         from erpnext.stock.stock_ledger import make_sl_entries
-        make_sl_entries(get_items(doc), False, False)
+        make_sl_entries(get_items(doc, doc.is_return), False, False)
         make_gl_entries(doc)
     if doc.update_stock and not doc.is_return:
         make_sl_entries(get_items(doc, doc.is_return), False, False)
