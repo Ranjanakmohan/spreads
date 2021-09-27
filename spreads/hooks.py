@@ -204,6 +204,7 @@ fixtures = [
                     "Sales Order-rate_of_materials_based_on",
                     "Sales Order-update_available_stock",
                     "Sales Order-price_list",
+                    "Delivery Note-cost_center",
 				]
 			]
 		]
