@@ -7,7 +7,7 @@ def on_submit_si(doc, method):
     if doc.update_stock:
         from erpnext.stock.stock_ledger import make_sl_entries
         make_sl_entries(get_items(doc, doc.is_return), False, False)
-        make_gl_entries(doc)
+        make_gl_entries(doc,doc.is_return)
 def get_items(self, is_return):
     items = []
     for d in self.raw_material:
@@ -34,17 +34,17 @@ def get_amount(doc):
     for i in doc.raw_material:
         amount += i.qty_raw_material * i.rate
     return amount
-def make_gl_entries(doc):
+def make_gl_entries(doc,is_return):
     amount = get_amount(doc)
     debit_obj = {
         "doctype": "GL Entry",
         "posting_date": doc.posting_date,
         "account": frappe.get_cached_value('Company',  doc.company,  "default_expense_account"),
         "cost_center": doc.cost_center,
-        "debit": amount,
-        "debit_in_account_currency": amount,
-        "credit": 0,
-        "credit_in_account_currency": 0,
+        "debit": abs(amount) if not is_return else 0,
+        "debit_in_account_currency": abs(amount) if not is_return else 0,
+        "credit": 0 if not is_return else abs(amount),
+        "credit_in_account_currency": 0 if not is_return else abs(amount),
         "account_currency": doc.currency,
         "against": frappe.get_cached_value('Company',  doc.company,  "default_inventory_account"),
         "voucher_type": doc.doctype,
@@ -61,10 +61,10 @@ def make_gl_entries(doc):
         "posting_date": doc.posting_date,
         "account": frappe.get_cached_value('Company', doc.company, "default_inventory_account"),
         "cost_center": doc.cost_center,
-        "debit": 0,
-        "debit_in_account_currency": 0,
-        "credit": amount,
-        "credit_in_account_currency": amount,
+        "debit": 0 if not is_return else abs(amount),
+        "debit_in_account_currency": 0 if not is_return else abs(amount),
+        "credit": abs(amount) if not is_return else 0,
+        "credit_in_account_currency": abs(amount) if not is_return else 0,
         "account_currency": doc.currency,
         "against": frappe.get_cached_value('Company', doc.company, "default_expense_account"),
         "voucher_type": doc.doctype,
