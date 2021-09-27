@@ -5,7 +5,7 @@ from erpnext.accounts.utils import get_fiscal_year
 from frappe.utils import cint, flt, cstr, get_link_to_form, nowtime
 from erpnext.accounts.utils import get_fiscal_year
 @frappe.whitelist()
-def on_submit_si(doc, method):
+def on_submit_dn(doc, method):
     from erpnext.stock.stock_ledger import make_sl_entries
     make_sl_entries(get_items(doc, doc.is_return), False, False)
     make_gl_entries(doc)
