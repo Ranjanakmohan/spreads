@@ -48,6 +48,9 @@ frappe.call({
 }
 
 cur_frm.cscript.item_code_raw_material = function (frm,cdt, cdn) {
+                      cur_frm.trigger("filter_service_item")
+
+
     var d = locals[cdt][cdn]
     if(d.item_code_raw_material){
 
@@ -64,6 +67,7 @@ cur_frm.cscript.item_code_raw_material = function (frm,cdt, cdn) {
                 d.rate = r.message[0]
                 d.amount = r.message[0] * d.qty_raw_material
                 d.available_qty = r.message[1]
+
                 cur_frm.refresh_field("raw_material")
             }
         })
@@ -131,4 +135,27 @@ cur_frm.cscript.raw_material_add = function (frm, cdt, cdn) {
     var d = locals[cdt][cdn]
     d.warehouse = warehouse
     cur_frm.refresh_field("raw_material")
+}
+cur_frm.cscript.refresh = function (frm,cdt, cdn) {
+  cur_frm.trigger("filter_service_item")
+}
+frappe.ui.form.on("Sales Order Item", {
+	item_code: function(frm, dt, dn) {
+		  cur_frm.trigger("filter_service_item")
+	}
+});
+cur_frm.cscript.filter_service_item = function () {
+      var items=[]
+    if(cur_frm.doc.items){
+        items = cur_frm.doc.items.map(x => x.is_service_item ? x.item_code : "")
+    }
+    console.log("REFRESH ITEMS")
+    console.log(items)
+    cur_frm.set_query('service_item', 'raw_material', () => {
+    return {
+        filters: [
+            ["name", "in", items]
+        ]
+    }
+    })
 }

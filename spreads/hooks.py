@@ -98,12 +98,18 @@ doctype_js = {
 doc_events = {
 	"Sales Invoice": {
 		"on_submit": "spreads.doc_events.sales_invoice.on_submit_si",
+		"validate": "spreads.doc_events.utils.validate_raw_material",
 	},
 	"Delivery Note": {
 		"on_submit": "spreads.doc_events.delivery_note.on_submit_dn",
+		"validate": "spreads.doc_events.utils.validate_raw_material",
 	},
 	"Sales Order": {
 		"on_submit": "spreads.doc_events.sales_order.on_submit_so",
+		"validate": "spreads.doc_events.utils.validate_raw_material",
+	},
+	"Quotation": {
+		"validate": "spreads.doc_events.utils.validate_raw_material",
 	}
 }
 
@@ -210,6 +216,11 @@ fixtures = [
                     "Sales Order-update_available_stock",
                     "Sales Order-price_list",
                     "Delivery Note-cost_center",
+
+                    "Quotation Item-is_service_item",
+                    "Sales Order Item-is_service_item",
+                    "Sales Invoice Item-is_service_item",
+                    "Delivery Note Item-is_service_item",
 				]
 			]
 		]
