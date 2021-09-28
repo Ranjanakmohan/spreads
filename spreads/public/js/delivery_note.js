@@ -18,26 +18,3 @@ cur_frm.cscript.onload_post_render = function () {
         })
 
 }
-cur_frm.cscript.refresh = function (frm,cdt, cdn) {
-  cur_frm.trigger("filter_service_item")
-}
-frappe.ui.form.on("Delivery Note Item", {
-	item_code: function(frm, dt, dn) {
-		  cur_frm.trigger("filter_service_item")
-	}
-});
-cur_frm.cscript.filter_service_item = function () {
-      var items=[]
-    if(cur_frm.doc.items){
-        items = cur_frm.doc.items.map(x => x.is_service_item ? x.item_code : "")
-    }
-    console.log("REFRESH ITEMS")
-    console.log(items)
-    cur_frm.set_query('service_item', 'raw_material', () => {
-    return {
-        filters: [
-            ["name", "in", items]
-        ]
-    }
-    })
-}
