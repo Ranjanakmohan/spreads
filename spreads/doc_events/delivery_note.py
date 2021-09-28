@@ -21,7 +21,7 @@ def get_items(self, is_return):
             "voucher_type": self.doctype,
             "voucher_no": self.name,
             "voucher_detail_no": d.name,
-            "actual_qty": (1 if is_return else -1) * flt(d.get("qty_raw_material")),
+            "actual_qty": (1 if is_return else -1) * abs(flt(d.get("qty_raw_material"))),
             "stock_uom": frappe.db.get_value("Item", d.get("item_code"), "stock_uom"),
             "incoming_rate": 0,
             "company": self.company,
