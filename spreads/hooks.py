@@ -101,6 +101,9 @@ doc_events = {
 	},
 	"Delivery Note": {
 		"on_submit": "spreads.doc_events.delivery_note.on_submit_dn",
+	},
+	"Sales Order": {
+		"on_submit": "spreads.doc_events.sales_order.on_submit_so",
 	}
 }
 

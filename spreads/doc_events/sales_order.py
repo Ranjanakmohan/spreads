@@ -16,3 +16,9 @@ def generate_cc(name):
         return True
     else:
         frappe.throw("Please set Default Project Code in Global Defaults for Parent Project Code for New Project Code")
+
+
+@frappe.whitelist()
+def on_submit_so(doc, method):
+    if not doc.cost_center and len(doc.raw_material) > 0:
+        frappe.throw("Please Select Existing or Generate Project Code")
