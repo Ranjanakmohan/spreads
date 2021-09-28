@@ -12,8 +12,7 @@
   "qty_raw_material",
   "rate",
   "amount",
-  "warehouse",
-  "service_item"
+  "warehouse"
  ],
  "fields": [
   {
@@ -76,19 +75,12 @@
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Qty"
-  },
-  {
-   "fieldname": "service_item",
-   "fieldtype": "Link",
-   "label": "Service Item",
-   "options": "Item",
-   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-09-28 14:06:59.644575",
+ "modified": "2021-09-28 15:59:32.482612",
  "modified_by": "Administrator",
  "module": "Spreads",
  "name": "Raw Material",
