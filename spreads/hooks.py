@@ -99,10 +99,12 @@ doc_events = {
 	"Sales Invoice": {
 		"on_submit": "spreads.doc_events.sales_invoice.on_submit_si",
 		"validate": "spreads.doc_events.utils.validate_raw_material",
+		"on_cancel": "spreads.doc_events.utils.cancel_doc",
 	},
 	"Delivery Note": {
 		"on_submit": "spreads.doc_events.delivery_note.on_submit_dn",
 		"validate": "spreads.doc_events.utils.validate_raw_material",
+		"on_cancel": "spreads.doc_events.utils.cancel_doc",
 	},
 	"Sales Order": {
 		"on_submit": "spreads.doc_events.sales_order.on_submit_so",
