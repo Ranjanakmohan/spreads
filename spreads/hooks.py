@@ -223,6 +223,10 @@ fixtures = [
                     "Sales Order Item-is_service_item",
                     "Sales Invoice Item-is_service_item",
                     "Delivery Note Item-is_service_item",
+
+
+                    "Sales Invoice-stock_entry",
+                    "Delivery Note-stock_entry",
 				]
 			]
 		]

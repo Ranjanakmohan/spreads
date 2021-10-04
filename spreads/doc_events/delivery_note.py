@@ -4,22 +4,26 @@ import frappe
 def on_submit_dn(doc, method):
     obj = {
         "doctype": "Stock Entry",
-        "stock_entry_type": "Material Issue",
+        "stock_entry_type": "Material Issue" if not doc.is_return else "Material Receipt",
         "items": get_items(doc),
+        "delivery_note_no": doc.name,
     }
     se = frappe.get_doc(obj).insert()
     se.submit()
+    frappe.db.sql(""" UPDATE `tabDelivery Note` SET stock_entry=%s WHERE name=%s """, (se.name, doc.name))
+    frappe.db.commit()
 def get_items(doc):
     items = []
 
     for i in doc.raw_material:
         obj = {
-            "s_warehouse": i.warehouse,
             "item_code": i.item_code_raw_material,
             "qty": i.qty_raw_material,
             "uom": i.uom,
             "basic_rate": i.rate
         }
+
+        obj["s_warehouse" if not doc.is_return else "t_warehouse"] = i.warehouse
 
         if doc.cost_center:
             obj['cost_center'] = doc.cost_center
