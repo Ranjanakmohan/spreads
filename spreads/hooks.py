@@ -112,6 +112,9 @@ doc_events = {
 	},
 	"Quotation": {
 		"validate": "spreads.doc_events.utils.validate_raw_material",
+	},
+	"Stock Entry": {
+		"on_cancel": "spreads.doc_events.utils.cancel_se_doc",
 	}
 }
 
