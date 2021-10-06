@@ -245,6 +245,18 @@ fixtures = [
 					"Quotation-column_break_901",
 					"Quotation-total_raw_material_expense",
 					"Quotation-section_break_902",
+
+					"Sales Order-column_break_901",
+					"Sales Order-total_raw_material_expense",
+					"Sales Order-section_break_902",
+
+					"Sales Invoice-column_break_901",
+					"Sales Invoice-total_raw_material_expense",
+					"Sales Invoice-section_break_902",
+
+					"Delivery Note-column_break_901",
+					"Delivery Note-total_raw_material_expense",
+					"Delivery Note-section_break_902",
 				]
 			]
 		]
