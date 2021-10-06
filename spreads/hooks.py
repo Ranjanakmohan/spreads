@@ -241,6 +241,10 @@ fixtures = [
 					"Item Group-is_maintain_item",
 					"Item Group-is_service_item",
 					"Item Group-is_fixed_asset",
+
+					"Quotation-column_break_901",
+					"Quotation-total_raw_material_expense",
+					"Quotation-section_break_902",
 				]
 			]
 		]

@@ -72,6 +72,7 @@ cur_frm.cscript.qty_raw_material = function (frm,cdt,cdn) {
     if(d.qty_raw_material && d.qty_raw_material <= d.available_qty){
         d.amount = d.rate * d.qty_raw_material
         cur_frm.refresh_field("raw_material")
+        total_raw_material(cur_frm)
     } else {
         var qty = d.qty_raw_material
         d.qty_raw_material = d.available_qty
@@ -81,7 +82,14 @@ cur_frm.cscript.qty_raw_material = function (frm,cdt,cdn) {
 
     }
 }
-
+function total_raw_material(cur_frm) {
+    var total = 0
+    for(var x=0;x<cur_frm.doc.raw_material.length;x += 1){
+        total += cur_frm.doc.raw_material[x].amount
+    }
+    cur_frm.doc.total_raw_material_expense = total
+    cur_frm.refresh_field("total_raw_material_expense")
+}
 cur_frm.cscript.product_bundle = function (frm,cdt,cdn) {
     if(cur_frm.doc.product_bundle){
         cur_frm.clear_table("raw_material")
