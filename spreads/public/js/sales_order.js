@@ -118,18 +118,10 @@ cur_frm.cscript.update_available_stock = function () {
 cur_frm.cscript.qty_raw_material = function (frm,cdt,cdn) {
     var d = locals[cdt][cdn]
 
-    if(d.qty_raw_material && d.qty_raw_material <= d.available_qty){
         d.amount = d.rate * d.qty_raw_material
         cur_frm.refresh_field("raw_material")
         total_raw_material(cur_frm)
-    } else {
-        var qty = d.qty_raw_material
-        d.qty_raw_material = d.available_qty
-        d.amount = d.rate * d.available_qty
-        cur_frm.refresh_field("raw_material")
-        frappe.throw("Not enough stock. Can't change to " + qty.toString())
 
-    }
 }
 function total_raw_material(cur_frm) {
     var total = 0
