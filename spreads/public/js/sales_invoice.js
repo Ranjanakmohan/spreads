@@ -9,4 +9,6 @@ cur_frm.cscript.onload_post_render = function () {
 
             }
         })
+       $('input[data-fieldname="total_raw_material_expense"]').css("border","3px solid blue")
+
 }

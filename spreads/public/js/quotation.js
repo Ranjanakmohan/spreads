@@ -109,6 +109,8 @@ cur_frm.cscript.product_bundle = function (frm,cdt,cdn) {
     }
 }
 cur_frm.cscript.onload_post_render = function (frm,cdt, cdn) {
+       $('input[data-fieldname="total_raw_material_expense"]').css("border","3px solid blue")
+
      cur_frm.set_query("item_code_raw_material", "raw_material", () => {
             return {
                     filters: {
