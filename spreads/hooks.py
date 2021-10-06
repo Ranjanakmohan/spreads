@@ -115,6 +115,9 @@ doc_events = {
 	},
 	"Stock Entry": {
 		"on_cancel": "spreads.doc_events.utils.cancel_se_doc",
+	},
+	"Item": {
+		"validate": "spreads.doc_events.items.validate_item",
 	}
 }
 
@@ -230,6 +233,14 @@ fixtures = [
 
                     "Sales Invoice-stock_entry",
                     "Delivery Note-stock_entry",
+
+					"Item Group-item_group_initials",
+                    "Item-item_group_initial",
+					"Item Group-is_sales_item",
+					"Item Group-is_purchase_item",
+					"Item Group-is_maintain_item",
+					"Item Group-is_service_item",
+					"Item Group-is_fixed_asset",
 				]
 			]
 		]
