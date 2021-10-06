@@ -238,7 +238,7 @@ fixtures = [
                     "Item-item_group_initial",
 					"Item Group-is_sales_item",
 					"Item Group-is_purchase_item",
-					"Item Group-is_maintain_item",
+					"Item Group-is_maintain_stock",
 					"Item Group-is_service_item",
 					"Item Group-is_fixed_asset",
 
