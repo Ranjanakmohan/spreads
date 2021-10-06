@@ -123,6 +123,15 @@ cur_frm.cscript.qty_raw_material = function (frm,cdt,cdn) {
         total_raw_material(cur_frm)
 
 }
+frappe.ui.form.on('Raw Material', {
+	rate: function(frm, cdt, cdn) {
+		var d = locals[cdt][cdn]
+
+        d.amount = d.rate * d.qty_raw_material
+        cur_frm.refresh_field("raw_material")
+        total_raw_material(cur_frm)
+	}
+})
 function total_raw_material(cur_frm) {
     var total = 0
     for(var x=0;x<cur_frm.doc.raw_material.length;x += 1){
