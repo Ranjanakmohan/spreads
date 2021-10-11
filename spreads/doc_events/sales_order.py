@@ -2,12 +2,12 @@ import frappe
 from frappe.model.mapper import get_mapped_doc
 from frappe.utils import flt
 @frappe.whitelist()
-def generate_cc(name):
+def generate_cc(name,customer):
     parent_cc = frappe.get_value("Global Defaults", "Global Defaults", "default_cost_center")
     if parent_cc:
         obj = {
             "doctype": "Cost Center",
-            "cost_center_name": name,
+            "cost_center_name": customer + "-" + name,
             "parent_cost_center": parent_cc,
             "sales_order": name
         }

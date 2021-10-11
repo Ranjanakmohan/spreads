@@ -118,6 +118,9 @@ doc_events = {
 	},
 	"Item": {
 		"validate": "spreads.doc_events.items.validate_item",
+	},
+	"Item Group": {
+		"validate": "spreads.doc_events.item_group.validate_item_group",
 	}
 }
 

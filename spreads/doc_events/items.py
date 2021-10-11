@@ -10,7 +10,7 @@ def validate_item(doc, method):
     doc.is_sales_item = frappe.db.get_value('Item Group', doc.item_group, "is_sales_item")
     doc.is_purchase_item = frappe.db.get_value('Item Group', doc.item_group, "is_purchase_item")
     doc.is_fixed_asset = frappe.db.get_value('Item Group', doc.item_group, "is_fixed_asset")
-    doc.is_service_item = frappe.db.get_value('Item Group', doc.item_group, "is_service_item")
+    doc.assembled_item = frappe.db.get_value('Item Group', doc.item_group, "is_service_item")
     doc.has_serial_no = frappe.db.get_value('Item Group', doc.item_group, "has_serial_no")
 
     if item_name_based == "Naming Series" and not doc.item_group_initial:
