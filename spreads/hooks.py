@@ -264,9 +264,11 @@ fixtures = [
 					"Quotation-estimated_admin_expense",
 					"Quotation-estimated_total_expense",
 					"Quotation-column_break_37",
+
 					"Sales Order-update_serial_no",
 					"Sales Order-section_break_333",
 					"Sales Order-section_break_3333",
+					"Sales Order-column_break_222",
 
 					"Sales Order-estimated_other_expense",
 					"Sales Order-estimated_labor_expense",
