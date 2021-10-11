@@ -51,7 +51,6 @@ frappe.ui.form.on('Raw Material', {
                 d.rate = r.message[0]
                 d.amount = r.message[0] * d.qty
                 d.available_qty = r.message[1]
-                d.serial_no = r.message[2]
 
                 cur_frm.refresh_field("raw_material")
             }
