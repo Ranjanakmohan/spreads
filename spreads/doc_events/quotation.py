@@ -38,7 +38,7 @@ def get_rate(item_code, warehouse, based_on,price_list):
             item_code, as_dict=1)
         rate = item_record[0].last_purchase_rate if len(item_record) > 0 else 0
 
-    return rate, balance, serial_no[0].name if len(serial_no) > 0 else ""
+    return rate, balance
 
 @frappe.whitelist()
 def set_available_qty(items):
