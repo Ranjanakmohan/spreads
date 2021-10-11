@@ -20,7 +20,8 @@ def get_items(doc):
             "item_code": i.item_code,
             "qty": i.qty,
             "uom": i.uom,
-            "basic_rate": i.rate
+            "basic_rate": i.rate,
+            "serial_no": i.serial_no
         }
 
         obj["s_warehouse" if not doc.is_return else "t_warehouse"] = i.warehouse
