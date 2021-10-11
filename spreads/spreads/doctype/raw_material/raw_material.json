@@ -1,4 +1,6 @@
 {
+ "_comments": "[]",
+ "_liked_by": "[]",
  "actions": [],
  "creation": "2021-09-23 11:51:12.013166",
  "doctype": "DocType",
@@ -69,7 +71,7 @@
   },
   {
    "fieldname": "serial_no",
-   "fieldtype": "Data",
+   "fieldtype": "Small Text",
    "label": "Serial No"
   },
   {
@@ -91,7 +93,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-10-11 13:52:00.018608",
+ "modified": "2021-10-11 15:49:28.427829",
  "modified_by": "Administrator",
  "module": "Spreads",
  "name": "Raw Material",

@@ -149,6 +149,7 @@ function total_raw_material(cur_frm) {
     }
     cur_frm.doc.total_raw_material_expense = total
     cur_frm.refresh_field("total_raw_material_expense")
+    total_expenses(cur_frm)
 }
 
 cur_frm.cscript.raw_material_add = function (frm, cdt, cdn) {
@@ -174,4 +175,20 @@ cur_frm.cscript.update_serial_no = function () {
                }
             }
         })
+}
+cur_frm.cscript.estimated_admin_expense = function () {
+    total_expenses(cur_frm)
+}
+cur_frm.cscript.estimated_labor_expense = function () {
+    total_expenses(cur_frm)
+}
+cur_frm.cscript.estimated_transportation_expense = function () {
+    total_expenses(cur_frm)
+}
+cur_frm.cscript.estimated_other_expense = function () {
+    total_expenses(cur_frm)
+}
+function total_expenses(cur_frm) {
+    cur_frm.doc.estimated_total_expense = cur_frm.doc.total_raw_material_expense + cur_frm.doc.estimated_admin_expense + cur_frm.doc.estimated_labor_expense + cur_frm.doc.estimated_transportation_expense + cur_frm.doc.estimated_other_expense
+    cur_frm.refresh_field("estimated_total_expense")
 }
