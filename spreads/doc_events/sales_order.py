@@ -1,5 +1,6 @@
 import frappe
-
+from frappe.model.mapper import get_mapped_doc
+from frappe.utils import flt
 @frappe.whitelist()
 def generate_cc(name):
     parent_cc = frappe.get_value("Global Defaults", "Global Defaults", "default_cost_center")
@@ -22,3 +23,29 @@ def generate_cc(name):
 def on_submit_so(doc, method):
     if not doc.cost_center and len(doc.raw_material) > 0:
         frappe.throw("Please Select Existing or Generate Project Code")
+
+    for i in doc.raw_material:
+        if not i.serial_no:
+            frappe.throw("Serial No is mandatory in raw material")
+
+
+@frappe.whitelist()
+def make_mr(source_name, target_doc=None):
+    print("==================================================")
+    doc = get_mapped_doc("Sales Order", source_name, {
+        "Sales Order": {
+            "doctype": "Material Request",
+            "validation": {
+                "docstatus": ["=", 1]
+            }
+        },
+        "Raw Material": {
+            "doctype": "Material Request Item",
+            "field_map": {
+                "name": "raw_material",
+                "parent": "sales_order"
+            },
+        }
+    }, target_doc)
+
+    return doc

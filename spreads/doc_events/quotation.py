@@ -37,7 +37,11 @@ def get_rate(item_code, warehouse, based_on,price_list):
             """ SELECT * FROM `tabItem` WHERE item_code=%s""",
             item_code, as_dict=1)
         rate = item_record[0].last_purchase_rate if len(item_record) > 0 else 0
-    return rate, balance
+
+    serial_no = frappe.db.sql(""" SELECT * FROM `tabSerial No` WHERE item_code=%s ORDER BY purchase_time DESC""",
+                              item_code, as_dict=1)
+
+    return rate, balance, serial_no[0].name if len(serial_no) > 0 else ""
 
 @frappe.whitelist()
 def set_available_qty(items):
@@ -46,7 +50,7 @@ def set_available_qty(items):
     date = frappe.utils.now_datetime().date()
     for d in data:
         previous_sle = get_previous_sle({
-            "item_code": d['item_code_raw_material'],
+            "item_code": d['item_code'],
             "warehouse": d['warehouse'],
             "posting_date": date,
             "posting_time": time
@@ -54,6 +58,16 @@ def set_available_qty(items):
         d['available_qty'] = previous_sle.get("qty_after_transaction") or 0
     print(data)
     return data
+
+@frappe.whitelist()
+def update_serial_no(items):
+    data = json.loads(items)
+    for d in data:
+        serial_no = frappe.db.sql(""" SELECT * FROM `tabSerial No` WHERE item_code=%s ORDER BY purchase_time DESC""", d['item_code'], as_dict=1)
+        d['serial_no'] = serial_no[0].name if len(serial_no) > 0 else ""
+    print(data)
+    return data
+
 @frappe.whitelist()
 def filter_item(doctype, txt, searchfield, start, page_len, filters):
     return frappe.db.sql("""

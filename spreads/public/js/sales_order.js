@@ -1,5 +1,16 @@
 var warehouse = ""
+frappe.ui.form.on('Sales Order', {
+	refresh: function(frm, cdt, cdn) {
+	            cur_frm.add_custom_button(__('MR for Raw Materials'), () => cur_frm.trigger("mr_material_request"), __('Create'));
 
+    },
+    mr_material_request: function() {
+		frappe.model.open_mapped_doc({
+			method: "spreads.doc_events.sales_order.make_mr",
+			frm: cur_frm
+		})
+    }
+})
 cur_frm.cscript.onload_post_render = function(){
  $('input[data-fieldname="total_raw_material_expense"]').css("border","3px solid blue")
 
@@ -10,7 +21,7 @@ cur_frm.cscript.onload_post_render = function(){
             }
         }
     })
-    cur_frm.set_query("item_code_raw_material", "raw_material", () => {
+    cur_frm.set_query("item_code", "raw_material", () => {
             return {
                     filters: {
                         is_stock_item: 1
@@ -49,54 +60,6 @@ frappe.call({
 })
 }
 
-cur_frm.cscript.item_code_raw_material = function (frm,cdt, cdn) {
-
-    var d = locals[cdt][cdn]
-    if(d.item_code_raw_material){
-
-        frappe.call({
-            method: "spreads.doc_events.quotation.get_rate",
-            args: {
-                item_code: d.item_code_raw_material,
-                warehouse: d.warehouse ? d.warehouse : "",
-                based_on: cur_frm.doc.rate_of_materials_based_on ? cur_frm.doc.rate_of_materials_based_on : "",
-                price_list: cur_frm.doc.price_list ? cur_frm.doc.price_list : ""
-
-            },
-            callback: function (r) {
-                d.rate = r.message[0]
-                d.amount = r.message[0] * d.qty_raw_material
-                d.available_qty = r.message[1]
-
-                cur_frm.refresh_field("raw_material")
-            }
-        })
-    }
-
-}
-cur_frm.cscript.warehouse = function (frm,cdt, cdn) {
-      var d = locals[cdt][cdn]
-    if(d.item_code_raw_material && d.warehouse){
-
-        frappe.call({
-            method: "spreads.doc_events.quotation.get_rate",
-            args: {
-                item_code: d.item_code_raw_material,
-                warehouse: d.warehouse ? d.warehouse : "",
-                based_on: cur_frm.doc.rate_of_materials_based_on ? cur_frm.doc.rate_of_materials_based_on : "",
-                price_list: cur_frm.doc.price_list ? cur_frm.doc.price_list : ""
-
-            },
-            callback: function (r) {
-                d.rate = r.message[0]
-                d.amount = r.message[0] * d.qty_raw_material
-                d.available_qty = r.message[1]
-                cur_frm.refresh_field("raw_material")
-            }
-        })
-    }
-}
-
 cur_frm.cscript.update_available_stock = function () {
      frappe.call({
             method: "spreads.doc_events.quotation.set_available_qty",
@@ -115,22 +78,69 @@ cur_frm.cscript.update_available_stock = function () {
             }
         })
 }
-cur_frm.cscript.qty_raw_material = function (frm,cdt,cdn) {
-    var d = locals[cdt][cdn]
-
-        d.amount = d.rate * d.qty_raw_material
-        cur_frm.refresh_field("raw_material")
-        total_raw_material(cur_frm)
-
-}
 frappe.ui.form.on('Raw Material', {
 	rate: function(frm, cdt, cdn) {
 		var d = locals[cdt][cdn]
 
-        d.amount = d.rate * d.qty_raw_material
+        d.amount = d.rate * d.qty
         cur_frm.refresh_field("raw_material")
         total_raw_material(cur_frm)
-	}
+	},
+    qty: function (frm,cdt,cdn) {
+    var d = locals[cdt][cdn]
+
+        d.amount = d.rate * d.qty
+        cur_frm.refresh_field("raw_material")
+        total_raw_material(cur_frm)
+
+    },
+    warehouse: function (frm,cdt, cdn) {
+      var d = locals[cdt][cdn]
+    if(d.item_code && d.warehouse){
+
+        frappe.call({
+            method: "spreads.doc_events.quotation.get_rate",
+            args: {
+                item_code: d.item_code,
+                warehouse: d.warehouse ? d.warehouse : "",
+                based_on: cur_frm.doc.rate_of_materials_based_on ? cur_frm.doc.rate_of_materials_based_on : "",
+                price_list: cur_frm.doc.price_list ? cur_frm.doc.price_list : ""
+
+            },
+            callback: function (r) {
+                d.rate = r.message[0]
+                d.amount = r.message[0] * d.qty
+                d.available_qty = r.message[1]
+                cur_frm.refresh_field("raw_material")
+            }
+        })
+    }
+},
+    item_code: function (frm,cdt, cdn) {
+
+    var d = locals[cdt][cdn]
+    if(d.item_code){
+
+        frappe.call({
+            method: "spreads.doc_events.quotation.get_rate",
+            args: {
+                item_code: d.item_code,
+                warehouse: d.warehouse ? d.warehouse : "",
+                based_on: cur_frm.doc.rate_of_materials_based_on ? cur_frm.doc.rate_of_materials_based_on : "",
+                price_list: cur_frm.doc.price_list ? cur_frm.doc.price_list : ""
+
+            },
+            callback: function (r) {
+                d.rate = r.message[0]
+                d.amount = r.message[0] * d.qty
+                d.available_qty = r.message[1]
+
+                cur_frm.refresh_field("raw_material")
+            }
+        })
+    }
+
+}
 })
 function total_raw_material(cur_frm) {
     var total = 0
@@ -145,4 +155,23 @@ cur_frm.cscript.raw_material_add = function (frm, cdt, cdn) {
     var d = locals[cdt][cdn]
     d.warehouse = warehouse
     cur_frm.refresh_field("raw_material")
+}
+
+cur_frm.cscript.update_serial_no = function () {
+    frappe.call({
+            method: "spreads.doc_events.quotation.update_serial_no",
+            args: {
+                items: cur_frm.doc.raw_material
+            },
+            callback: function (r) {
+                var objIndex = 0
+               for(var x=0;x<r.message.length;x+=1){
+                    console.log("NAA")
+                   objIndex = cur_frm.doc.raw_material.findIndex(obj => obj.name === r.message[x]['name'])
+
+                    cur_frm.doc.raw_material[objIndex].serial_no = r.message[x]['serial_no']
+                   cur_frm.refresh_field("raw_material")
+               }
+            }
+        })
 }

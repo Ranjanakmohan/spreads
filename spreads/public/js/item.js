@@ -18,11 +18,13 @@ cur_frm.cscript.item_group = function () {
                 cur_frm.doc.is_purchase_item = doc.is_purchase_item
                 cur_frm.doc.is_fixed_asset = doc.is_fixed_asset
                 cur_frm.doc.is_service_item = doc.is_service_item
+                cur_frm.doc.has_serial_no = doc.has_serial_no
                 cur_frm.refresh_field("is_stock_item")
                 cur_frm.refresh_field("is_sales_item")
                 cur_frm.refresh_field("is_purchase_item")
                 cur_frm.refresh_field("is_fixed_asset")
                 cur_frm.refresh_field("is_service_item")
+                cur_frm.refresh_field("has_serial_no")
             })
     }
 

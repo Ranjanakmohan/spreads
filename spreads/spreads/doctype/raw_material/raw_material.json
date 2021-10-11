@@ -5,18 +5,20 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "item_code_raw_material",
+  "item_code",
   "item_name",
   "uom",
   "available_qty",
-  "qty_raw_material",
+  "column_break_5",
+  "qty",
   "rate",
   "amount",
-  "warehouse"
+  "warehouse",
+  "serial_no"
  ],
  "fields": [
   {
-   "fetch_from": "item_code_raw_material.item_name",
+   "fetch_from": "item_code.item_name",
    "fieldname": "item_name",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -62,7 +64,16 @@
    "options": "Warehouse"
   },
   {
-   "fieldname": "item_code_raw_material",
+   "fieldname": "column_break_5",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "serial_no",
+   "fieldtype": "Data",
+   "label": "Serial No"
+  },
+  {
+   "fieldname": "item_code",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Item Code",
@@ -71,7 +82,7 @@
   {
    "columns": 1,
    "default": "0",
-   "fieldname": "qty_raw_material",
+   "fieldname": "qty",
    "fieldtype": "Float",
    "in_list_view": 1,
    "label": "Qty"
@@ -80,7 +91,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-09-28 15:59:32.482612",
+ "modified": "2021-10-11 13:52:00.018608",
  "modified_by": "Administrator",
  "module": "Spreads",
  "name": "Raw Material",

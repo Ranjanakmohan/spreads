@@ -257,6 +257,14 @@ fixtures = [
 					"Delivery Note-column_break_901",
 					"Delivery Note-total_raw_material_expense",
 					"Delivery Note-section_break_902",
+
+					"Quotation-estimated_other_expense",
+					"Quotation-estimated_labor_expense",
+					"Quotation-estimated_transportation_expense",
+					"Quotation-estimated_admin_expense",
+					"Quotation-estimated_total_expense",
+					"Quotation-column_break_37",
+					"Quotation-update_serial_no",
 				]
 			]
 		]
