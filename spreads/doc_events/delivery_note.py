@@ -17,8 +17,8 @@ def get_items(doc):
 
     for i in doc.raw_material:
         obj = {
-            "item_code": i.item_code_raw_material,
-            "qty": i.qty_raw_material,
+            "item_code": i.item_code,
+            "qty": i.qty,
             "uom": i.uom,
             "basic_rate": i.rate
         }
