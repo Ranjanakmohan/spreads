@@ -89,6 +89,7 @@ function total_raw_material(cur_frm) {
     }
     cur_frm.doc.total_raw_material_expense = total
     cur_frm.refresh_field("total_raw_material_expense")
+    total_expenses(cur_frm)
 }
 cur_frm.cscript.product_bundle = function (frm,cdt,cdn) {
     if(cur_frm.doc.product_bundle){
@@ -155,7 +156,7 @@ cur_frm.cscript.estimated_other_expense = function () {
     total_expenses(cur_frm)
 }
 function total_expenses(cur_frm) {
-    cur_frm.doc.estimated_total_expense = cur_frm.doc.estimated_admin_expense + cur_frm.doc.estimated_labor_expense + cur_frm.doc.estimated_transportation_expense + cur_frm.doc.estimated_other_expense
+    cur_frm.doc.estimated_total_expense = cur_frm.doc.total_raw_material_expense + cur_frm.doc.estimated_admin_expense + cur_frm.doc.estimated_labor_expense + cur_frm.doc.estimated_transportation_expense + cur_frm.doc.estimated_other_expense
     cur_frm.refresh_field("estimated_total_expense")
 }
 
