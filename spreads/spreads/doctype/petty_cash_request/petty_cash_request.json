@@ -31,7 +31,7 @@
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Series",
-   "options": "PCR-.YYYY.-"
+   "options": "SIS-.YYYY.-"
   },
   {
    "fieldname": "employee",
@@ -154,7 +154,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2021-10-11 07:20:26.165397",
+ "modified": "2021-10-12 19:16:59.717751",
  "modified_by": "Administrator",
  "module": "Spreads",
  "name": "Petty Cash Request",
