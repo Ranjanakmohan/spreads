@@ -43,7 +43,8 @@
         Thrissur, Kerala -680004<br>
         Phone : +91 95265 10001<br>
         Email : www.spreadssolutions.com<br>
-        Web : info@spreadssolutions.com
+        Web : info@spreadssolutions.com<br>
+        GSTIN: 32ABCCS0335A1Z7
     </td>
     <td style="width: 50%;font-size: small;background-color: white">
                 {{_("To")}}:<br>
@@ -77,17 +78,15 @@
 <div><h4>Materials</h4></div>
 <table style="width: 100%;margin-top: 1%;border-bottom: 3px solid limegreen;">
     <tr style="background-color: orange">
-        <td class="text-center" style="width: 25%">{{_("Qty")}}</td>
-        <td  style="width: 25%">{{_("Material Description")}}</td>
-        <td class="text-center" style="width: 25%">{{_("Price")}}</td>
-        <td class="text-center" style="width: 25%">{{_("Total")}}</td>
+        <td class="text-center" style="width: 20%">{{_("Qty")}}</td>
+        <td class="text-center" style="width: 20%">{{_("UOM")}}</td>
+        <td  style="width: 60%">{{_("Material Description")}}</td>
     </tr>
     {%for i in doc.raw_material%}
         <tr>
-            <td class="text-center" style="width: 25%">{{i.qty}}</td>
-            <td style="width: 25%">{{i.item_name}}</td>
-            <td class="text-center" style="width: 25%">{{frappe.utils.fmt_money(i.rate,currency=doc.currency)}}</td>
-            <td class="text-center" style="width: 25%">{{frappe.utils.fmt_money(i.amount,currency=doc.currency)}}</td>
+            <td class="text-center" style="width: 20%">{{i.qty}}</td>
+            <td class="text-center" style="width: 20%">{{i.uom}}</td>
+            <td style="width: 60%">{{i.item_name}}</td>
         </tr>
     {%endfor%}
 
