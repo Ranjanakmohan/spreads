@@ -1,0 +1,217 @@
+{
+ "actions": [],
+ "autoname": "naming_series:",
+ "creation": "2021-10-11 15:16:52.356408",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "sjr_status",
+  "status",
+  "customer",
+  "customer_name",
+  "column_break_4",
+  "site_visit_report",
+  "start_date",
+  "contact_person",
+  "contact_number",
+  "section_break_9",
+  "team_members",
+  "section_break_11",
+  "scoop_of_work",
+  "section_break_13",
+  "total",
+  "svrj_row_name",
+  "permanent_submit",
+  "amended_from",
+  "images_section",
+  "attach_1",
+  "image_1",
+  "column_break_28",
+  "attach_2",
+  "image_2"
+ ],
+ "fields": [
+  {
+   "allow_on_submit": 1,
+   "default": "Completed",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Status",
+   "options": "\nCompleted"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Customer",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "customer.customer_name",
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "label": "Customer Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_4",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "contact_person",
+   "fieldtype": "Data",
+   "label": "Contact Person"
+  },
+  {
+   "fieldname": "contact_number",
+   "fieldtype": "Data",
+   "label": "Contact Number"
+  },
+  {
+   "fieldname": "section_break_9",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Site Job Report",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "team_members",
+   "fieldtype": "Table",
+   "label": "Team Members",
+   "options": "Team Members"
+  },
+  {
+   "fieldname": "section_break_11",
+   "fieldtype": "Section Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "scoop_of_work",
+   "fieldtype": "Table",
+   "label": "Scoop of Work",
+   "options": "Site Job SOW"
+  },
+  {
+   "fieldname": "section_break_13",
+   "fieldtype": "Section Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "total",
+   "fieldtype": "Currency",
+   "label": "Total",
+   "read_only": 1
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "SJR-.YYYY.-"
+  },
+  {
+   "fieldname": "site_visit_report",
+   "fieldtype": "Link",
+   "label": "Site Visit Report",
+   "options": "Site Visit Report",
+   "read_only": 1
+  },
+  {
+   "fieldname": "svrj_row_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "SVRJ Row Name"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "permanent_submit",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Permanent Submit"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "Completed",
+   "depends_on": "eval: doc.permanent_submit == 0",
+   "fieldname": "sjr_status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "SJR Status",
+   "options": "\nCompleted"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "images_section",
+   "fieldtype": "Section Break",
+   "label": "Images"
+  },
+  {
+   "fieldname": "attach_1",
+   "fieldtype": "Attach",
+   "label": "Attach 1"
+  },
+  {
+   "fieldname": "image_1",
+   "fieldtype": "Image",
+   "label": "Image 1",
+   "options": "attach_1"
+  },
+  {
+   "fieldname": "column_break_28",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "attach_2",
+   "fieldtype": "Attach",
+   "label": "Attach 2"
+  },
+  {
+   "fieldname": "image_2",
+   "fieldtype": "Image",
+   "label": "Image 2",
+   "options": "attach_2"
+  },
+  {
+   "default": "Today",
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Date",
+   "reqd": 1
+  }
+ ],
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2021-10-12 13:44:09.074719",
+ "modified_by": "Administrator",
+ "module": "Spreads",
+ "name": "Site Job Report",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
