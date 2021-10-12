@@ -61,7 +61,7 @@
                 {{_("To")}}:<br>
 
         <b>
-              {%if doc.doctype == 'Sales Invoice'%}{{doc.customer_name}}{%else%} {{doc.party_name}}{%endif%}
+              {{doc.customer_name}}
             </b><br>
         {%if doc.address_display%}
             {{doc.address_display}}
