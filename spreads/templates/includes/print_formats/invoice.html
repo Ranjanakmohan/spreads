@@ -24,7 +24,7 @@
     </td>
     <td style="width: 50%;background-color: white">
         <h6>
-            <b>{%if doc.doctype == 'Sales Invoice'%}{{_("INVOICE NO #")}}{%else%}{{_("QUOTATION NO")}}{%endif%} {{doc.name}}</b><br>
+            <b>{%if doc.doctype == 'Sales Invoice'%}{{_("INVOICE NO #")}}{%else%}{{_("QUOTATION")}}{%endif%} {{doc.name}} No</b><br>
         </h6>
         <h6>
             <span><b>{{_("Date")}}:</b>
@@ -35,6 +35,13 @@
                 {%endif%}
 
             </span>
+            {%if doc.doctype == "Quotation"%}
+            <br>
+            <span><b>{{_("Valid Till")}}:</b>
+                    {{frappe.utils.formatdate(doc.get_formatted('valid_till'), "dd-MM-yyyy") }}
+            </span>
+            {%endif%}
+
         </h6>
     </td>
 </table>
@@ -65,7 +72,7 @@
 <table style="width: 100%;margin-top: 1%;border-bottom: 3px solid blue;">
     <tr style="background-color: orange">
         <td class="text-center" style="width: 25%">{{_("Qty")}}</td>
-        <td  style="width: 25%">{{_("Product Description")}}</td>
+        <td  style="width: 25%">{{_("Service Description")}}</td>
         <td class="text-center" style="width: 25%">{{_("Price")}}</td>
         <td class="text-center" style="width: 25%">{{_("Total")}}</td>
     </tr>
@@ -81,15 +88,17 @@
 </table>
 <table style="width: 100%;margin-top: 1%;border-bottom: 3px solid blue;">
     <tr style="background-color: orange">
-        <td class="text-center" style="width: 20%">{{_("Qty")}}</td>
-        <td class="text-center" style="width: 20%">{{_("UOM")}}</td>
-        <td  style="width: 60%">{{_("Material Description")}}</td>
+        <td class="text-center" style="width: 25%">{{_("Qty")}}</td>
+
+        <td  style="width: 50%">{{_("Material Description")}}</td>
+        <td class="text-center" style="width: 25%">{{_("UOM")}}</td>
     </tr>
     {%for i in doc.raw_material%}
         <tr>
-            <td class="text-center" style="width: 20%">{{i.qty | int}}</td>
-            <td class="text-center" style="width: 20%">{{i.uom}}</td>
-            <td style="width: 60%">{{i.item_name}}</td>
+            <td class="text-center" style="width: 25%">{{i.qty | int}}</td>
+            <td style="width: 50%">{{i.item_name}}</td>
+            <td class="text-center" style="width: 25%">{{i.uom}}</td>
+
         </tr>
     {%endfor%}
 
