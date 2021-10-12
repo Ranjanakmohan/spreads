@@ -28,7 +28,11 @@
         </h6>
         <h6>
             <span><b>{{_("Date")}}:</b>
-                {%if doc.doctype == 'Sales Invoice'%}{{doc.posting_date}}{%else%}{{doc.transaction_date}}{%endif%}
+                {%if doc.doctype == 'Sales Invoice'%}
+                     {{frappe.utils.formatdate(doc.get_formatted('posting_date'), "dd-MM-yyyy") }}
+                {%else%}
+                    {{frappe.utils.formatdate(doc.get_formatted('transaction_date'), "dd-MM-yyyy") }}
+                {%endif%}
 
             </span>
         </h6>
@@ -67,7 +71,7 @@
     </tr>
     {%for i in doc.items%}
         <tr>
-            <td class="text-center" style="width: 25%">{{i.qty}}</td>
+            <td class="text-center" style="width: 25%">{{i.qty | int}}</td>
             <td style="width: 25%">{{i.item_name}}</td>
             <td class="text-center" style="width: 25%">{{frappe.utils.fmt_money(i.rate,currency=doc.currency)}}</td>
             <td class="text-center" style="width: 25%">{{frappe.utils.fmt_money(i.amount,currency=doc.currency)}}</td>
@@ -84,7 +88,7 @@
     </tr>
     {%for i in doc.raw_material%}
         <tr>
-            <td class="text-center" style="width: 20%">{{i.qty}}</td>
+            <td class="text-center" style="width: 20%">{{i.qty | int}}</td>
             <td class="text-center" style="width: 20%">{{i.uom}}</td>
             <td style="width: 60%">{{i.item_name}}</td>
         </tr>
