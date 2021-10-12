@@ -105,39 +105,62 @@
 </table>
 <table style="width: 100%;margin-top: 1%">
     <tr>
-        <td colspan="2" class="text-center" style="width: 50%;background-color: white"></td>
-        <td class="text-center" style="width: 25%;background-color: white">{{_("Subtotal")}}</td>
+        <td colspan="2" class="text-center" style="width: 40%;background-color: white"></td>
+        <td class="text-right" style="width: 35%;background-color: white">{{_("Subtotal")}}</td>
         <td class="text-right" style="width: 25%;background-color: white">{{frappe.utils.fmt_money(doc.total,currency=doc.currency)}}</td>
     </tr>
    <tr>
-       <td colspan="2" class="text-left" style="font-size: small;width: 50%;background-color: white"><b>{{_("Payment Method")}}</b></td>
-        <td class="text-center" style="width: 25%;background-color: white">{{_("Tax Rate")}}</td>
-        <td class="text-right" style="width: 25%;background-color: white">{{frappe.utils.fmt_money(doc.total_taxes_and_charges,currency=doc.currency)}}</td>
-    </tr>
+       {%if doc.taxes | length > 0%}
+           {%for i in doc.taxes%}
+                {%if i.idx == 1%}
+                       <td colspan="2" class="text-left" style="font-size: small;width: 50%;background-color: white"><b>{{_("Payment Method")}}</b></td>
+
+                {%else%}
+                    {%if i.idx == 2%}
+                       <td colspan="2" class="text-left" style="font-size: small;width: 50%;background-color: white">
+                           {%for i in doc.payment_schedule%}
+                                {%if i.payment_term%}
+                                    {{i.payment_term}},
+                                {%endif%}
+                            {%endfor%}
+                       </td>
+                    {%else%}
+                        <td colspan="2" class="text-left" style="font-size: small;width: 50%;background-color: white">
+
+                       </td>
+                    {%endif%}
+                {%endif%}
+                <td class="text-right" style="width: 25%;background-color: white">{{i.account_head}}</td>
+                <td class="text-right" style="width: 25%;background-color: white">{{frappe.utils.fmt_money(i.tax_amount,currency=doc.currency)}}</td>
+
+   </tr>
+           {%endfor%}
+       {%endif%}
     <tr>
         <td colspan="2" class="text-left" style="width: 50%;background-color: white">
-            <span style="font-size: smaller">
-            {%for i in doc.payment_schedule%}
-                {%if i.payment_term%}
-                    {{i.payment_term}},
-                {%endif%}
-            {%endfor%}
-            </span>
+            {%if doc.taxes | length == 1%}
+                <span style="font-size: smaller">
+                    {%for i in doc.payment_schedule%}
+                        {%if i.payment_term%}
+                            {{i.description}},
+                        {%endif%}
+                    {%endfor%}
+                </span>
+            {%endif%}
         </td>
-        <td class="text-center" style="width: 25%;background-color: orange"></td>
+        <td class="text-center" style="width: 25%;background-color: white"></td>
         <td class="text-right" style="width: 25%;font-size: larger;background-color: orange">{{frappe.utils.fmt_money(doc.grand_total,currency=doc.currency)}}</td>
     </tr>
-  <tr>
-          <td colspan="2" class="text-left" style="width: 50%;background-color: white">
+
+
+
+
+</table>
+<table style="width: 100%">
+          <td colspan="2" class="text-left" style="width: 100%;background-color: white">
               <b>{{_("Terms & Conditions:")}}</b> <br>
               <span style="font-size: smaller">{%if doc.terms%}{{doc.terms}}{%endif%}</span>
           </td>
-        <td class="text-center" style="width: 25%;background-color: white"></td>
-        <td class="text-right" style="width: 25%;font-size: larger;background-color: white"></td>
-    </tr>
-
-
-
 </table>
 
 <div id="footer-html" class="visible-pdf">
