@@ -1,4 +1,14 @@
 var warehouse = ""
+frappe.ui.form.on('Quotation', {
+	refresh: function(frm) {
+		cur_frm.fields_dict["raw_material"].grid.add_custom_button(__('Update Available Stock'),
+			function() {
+				cur_frm.trigger('update_available_stock')
+        });
+        cur_frm.fields_dict["raw_material"].grid.grid_buttons.find('.btn-custom').removeClass('btn-default').addClass('btn-primary');
+
+	}
+})
 cur_frm.cscript.update_available_stock = function () {
      frappe.call({
             method: "spreads.doc_events.quotation.set_available_qty",

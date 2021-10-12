@@ -27,8 +27,8 @@
             <b>{%if doc.doctype == 'Sales Invoice'%}{{_("INVOICE NO #")}}{%else%}{{_("QUOTATION NO")}}{%endif%} {{doc.name}}</b><br>
         </h6>
         <h6>
-            <span><b>{{_("Date")}}:</b>{
-                {%if doc.doctype == 'Sales Invoice'%}{{doc.posting_date}}{%else%} {{doc.transaction_date}}{%endif%}
+            <span><b>{{_("Date")}}:</b>
+                {%if doc.doctype == 'Sales Invoice'%}{{doc.posting_date}}{%else%}{{doc.transaction_date}}{%endif%}
 
             </span>
         </h6>
@@ -56,6 +56,7 @@
         {%endif%}
     </td>
 </table>
+<div><h4>Items</h4></div>
 <table style="width: 100%;margin-top: 1%;border-bottom: 3px solid limegreen;">
     <tr style="background-color: orange">
         <td class="text-center" style="width: 25%">{{_("Qty")}}</td>
@@ -64,6 +65,24 @@
         <td class="text-center" style="width: 25%">{{_("Total")}}</td>
     </tr>
     {%for i in doc.items%}
+        <tr>
+            <td class="text-center" style="width: 25%">{{i.qty}}</td>
+            <td style="width: 25%">{{i.item_name}}</td>
+            <td class="text-center" style="width: 25%">{{frappe.utils.fmt_money(i.rate,currency=doc.currency)}}</td>
+            <td class="text-center" style="width: 25%">{{frappe.utils.fmt_money(i.amount,currency=doc.currency)}}</td>
+        </tr>
+    {%endfor%}
+
+</table>
+<div><h4>Raw Materials</h4></div>
+<table style="width: 100%;margin-top: 1%;border-bottom: 3px solid limegreen;">
+    <tr style="background-color: orange">
+        <td class="text-center" style="width: 25%">{{_("Qty")}}</td>
+        <td  style="width: 25%">{{_("Product Description")}}</td>
+        <td class="text-center" style="width: 25%">{{_("Price")}}</td>
+        <td class="text-center" style="width: 25%">{{_("Total")}}</td>
+    </tr>
+    {%for i in doc.raw_material%}
         <tr>
             <td class="text-center" style="width: 25%">{{i.qty}}</td>
             <td style="width: 25%">{{i.item_name}}</td>
