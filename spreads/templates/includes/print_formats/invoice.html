@@ -119,8 +119,8 @@
                     {%if i.idx == 2%}
                        <td colspan="2" class="text-left" style="font-size: small;width: 50%;background-color: white">
                            {%for i in doc.payment_schedule%}
-                                {%if i.payment_term%}
-                                    {{i.payment_term}},
+                                {%if i.description%}
+                                    {{i.description}},
                                 {%endif%}
                             {%endfor%}
                        </td>
@@ -130,7 +130,7 @@
                        </td>
                     {%endif%}
                 {%endif%}
-                <td class="text-right" style="width: 25%;background-color: white">{{i.account_head}}</td>
+                <td class="text-right" style="width: 25%;background-color: white">{{i.description}}</td>
                 <td class="text-right" style="width: 25%;background-color: white">{{frappe.utils.fmt_money(i.tax_amount,currency=doc.currency)}}</td>
 
    </tr>
@@ -141,7 +141,7 @@
             {%if doc.taxes | length == 1%}
                 <span style="font-size: smaller">
                     {%for i in doc.payment_schedule%}
-                        {%if i.payment_term%}
+                        {%if i.description%}
                             {{i.description}},
                         {%endif%}
                     {%endfor%}
