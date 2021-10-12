@@ -109,6 +109,14 @@
 
 
 </table>
+
+<div id="footer-html" class="visible-pdf">
+{% if doc.letter_head %}
+	<div class="letter-head-footer">
+		{{ frappe.render_template(frappe.db.get_value("Letter Head", doc.letter_head, "footer"), {"doc": doc}) }}
+	</div>
+{% endif %}
+</div>
 </body>
 
 </html>
