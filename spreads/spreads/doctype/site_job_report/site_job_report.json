@@ -117,7 +117,7 @@
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Series",
-   "options": "SJR-.YYYY.-"
+   "options": "SIS-.YYYY.-"
   },
   {
    "fieldname": "site_visit_report",
@@ -192,7 +192,7 @@
  ],
  "is_submittable": 1,
  "links": [],
- "modified": "2021-10-12 13:44:09.074719",
+ "modified": "2021-10-12 19:15:45.829033",
  "modified_by": "Administrator",
  "module": "Spreads",
  "name": "Site Job Report",
