@@ -279,6 +279,8 @@ fixtures = [
 					"Sales Order-estimated_transportation_expense",
 					"Sales Order-estimated_admin_expense",
 					"Sales Order-estimated_total_expense",
+					"Employee-petty_cash_account",
+					"Journal Entry-petty_cash_request",
 				]
 			]
 		]
