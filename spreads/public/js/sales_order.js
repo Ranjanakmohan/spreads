@@ -46,7 +46,7 @@ frappe.call({
     method: "spreads.doc_events.sales_order.generate_cc",
     args: {
         name: cur_frm.doc.name,
-        customer: cur_frm.doc.customer
+        customer: cur_frm.doc.customer_name
     },
     async: false,
     callback: function (r) {
