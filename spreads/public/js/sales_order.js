@@ -1,7 +1,9 @@
 var warehouse = ""
 frappe.ui.form.on('Sales Order', {
 	refresh: function(frm, cdt, cdn) {
-	            cur_frm.add_custom_button(__('MR for Raw Materials'), () => cur_frm.trigger("mr_material_request"), __('Create'));
+        cur_frm.add_custom_button(__('MR for Raw Materials'), () => cur_frm.trigger("mr_material_request"), __('Create'));
+        cur_frm.add_custom_button(__('Custom Sales Invoice'), () => cur_frm.trigger("make_sales_invoice"), __('Create'));
+        cur_frm.add_custom_button(__('Custom Delivery Note'), () => cur_frm.trigger("make_delivery_note_based_on_delivery_date"), __('Create'));
 
     },
     mr_material_request: function() {
@@ -9,8 +11,98 @@ frappe.ui.form.on('Sales Order', {
 			method: "spreads.doc_events.sales_order.make_mr",
 			frm: cur_frm
 		})
-    }
+    },
+    make_sales_invoice: function() {
+        if(check_serial_no(cur_frm)){
+            frappe.model.open_mapped_doc({
+                method: "erpnext.selling.doctype.sales_order.sales_order.make_sales_invoice",
+                frm: cur_frm
+		    })
+        } else {
+            frappe.throw("Serial No is mandatory in raw material")
+        }
+
+	},
+    make_delivery_note_based_on_delivery_date: function(frm) {
+		var me = this;
+
+		var delivery_dates = [];
+		$.each(cur_frm.doc.items || [], function(i, d) {
+			if(!delivery_dates.includes(d.delivery_date)) {
+				delivery_dates.push(d.delivery_date);
+			}
+		});
+
+		var item_grid = cur_frm.fields_dict["items"].grid;
+		if(!item_grid.get_selected().length && delivery_dates.length > 1) {
+			var dialog = new frappe.ui.Dialog({
+				title: __("Select Items based on Delivery Date"),
+				fields: [{fieldtype: "HTML", fieldname: "dates_html"}]
+			});
+
+			var html = $(`
+				<div style="border: 1px solid #d1d8dd">
+					<div class="list-item list-item--head">
+						<div class="list-item__content list-item__content--flex-2">
+							${__('Delivery Date')}
+						</div>
+					</div>
+					${delivery_dates.map(date => `
+						<div class="list-item">
+							<div class="list-item__content list-item__content--flex-2">
+								<label>
+								<input type="checkbox" data-date="${date}" checked="checked"/>
+								${frappe.datetime.str_to_user(date)}
+								</label>
+							</div>
+						</div>
+					`).join("")}
+				</div>
+			`);
+
+			var wrapper = dialog.fields_dict.dates_html.$wrapper;
+			wrapper.html(html);
+
+			dialog.set_primary_action(__("Select"), function() {
+				var dates = wrapper.find('input[type=checkbox]:checked')
+					.map((i, el) => $(el).attr('data-date')).toArray();
+
+				if(!dates) return;
+
+				$.each(dates, function(i, d) {
+					$.each(item_grid.grid_rows || [], function(j, row) {
+						if(row.doc.delivery_date == d) {
+							row.doc.__checked = 1;
+						}
+					});
+				})
+				cur_frm.trigger("make_delivery_note")
+				dialog.hide();
+			});
+			dialog.show();
+		} else {
+		    cur_frm.trigger("make_delivery_note")
+		}
+	},
+    make_delivery_note: function(frm) {
+	    if(check_serial_no(cur_frm)){
+	        frappe.model.open_mapped_doc({
+                method: "erpnext.selling.doctype.sales_order.sales_order.make_delivery_note",
+                frm: cur_frm
+		    })
+        } else {
+            frappe.throw("Serial No is mandatory in raw material")
+        }
+
+	}
 })
+function check_serial_no(cur_frm) {
+    for(var x=0;x<cur_frm.doc.raw_material.length;x+=1){
+        if(!cur_frm.doc.raw_material[x].serial_no)
+            return false
+    }
+    return true
+}
 cur_frm.cscript.onload_post_render = function(){
  $('input[data-fieldname="total_raw_material_expense"]').css("border","3px solid blue")
 

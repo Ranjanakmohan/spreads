@@ -24,10 +24,6 @@ def on_submit_so(doc, method):
     if not doc.cost_center and len(doc.raw_material) > 0:
         frappe.throw("Please Select Existing or Generate Project Code")
 
-    for i in doc.raw_material:
-        if not i.serial_no:
-            frappe.throw("Serial No is mandatory in raw material")
-
 
 @frappe.whitelist()
 def make_mr(source_name, target_doc=None):
