@@ -71,14 +71,16 @@
 <div><h4>Items</h4></div>
 <table style="width: 100%;margin-top: 1%;border-bottom: 3px solid blue;">
     <tr style="background-color: #ff9933">
-        <td class="text-center" style="width: 25%">{{_("Qty")}}</td>
-        <td  style="width: 25%">{{_("Service Description")}}</td>
-        <td class="text-center" style="width: 25%">{{_("Price")}}</td>
-        <td class="text-center" style="width: 25%">{{_("Total")}}</td>
+        <td class="text-center" style="width: 20%">{{_("Qty")}}</td>
+        <td class="text-center" style="width: 20%">{{_("HSN/SAC ")}}</td>
+        <td  style="width: 20%">{{_("Service Description")}}</td>
+        <td class="text-center" style="width: 20%">{{_("Price")}}</td>
+        <td class="text-center" style="width: 20%">{{_("Total")}}</td>
     </tr>
     {%for i in doc.items%}
         <tr>
             <td class="text-center" style="width: 25%">{{i.qty | int}}</td>
+            <td class="text-center" style="width: 25%">{%if frappe.db.get_value("Item", i.item_code, "hsnsac")%}{{frappe.db.get_value("Item", i.item_code, "hsnsac")}}{%endif%}</td>
             <td style="width: 25%">{{i.item_name}}</td>
             <td class="text-center" style="width: 25%">{{frappe.utils.fmt_money(i.rate,currency=doc.currency)}}</td>
             <td class="text-center" style="width: 25%">{{frappe.utils.fmt_money(i.amount,currency=doc.currency)}}</td>
@@ -89,14 +91,16 @@
 <table style="width: 100%;margin-top: 1%;border-bottom: 3px solid blue;">
     <tr style="background-color: #ff9933">
         <td class="text-center" style="width: 25%">{{_("Qty")}}</td>
+        <td class="text-center" style="width: 25%">{{_("HSN/SAC ")}}</td>
 
-        <td  style="width: 50%">{{_("Material Description")}}</td>
+        <td  style="width: 25%">{{_("Material Description")}}</td>
         <td class="text-center" style="width: 25%">{{_("UOM")}}</td>
     </tr>
     {%for i in doc.raw_material%}
         <tr>
             <td class="text-center" style="width: 25%">{{i.qty | int}}</td>
-            <td style="width: 50%">{{i.item_name}}</td>
+                    <td class="text-center" style="width: 25%">{%if frappe.db.get_value("Item", i.item_code, "hsnsac")%}{{frappe.db.get_value("Item", i.item_code, "hsnsac")}}{%endif%}</td>
+            <td style="width: 25%">{{i.item_name}}</td>
             <td class="text-center" style="width: 25%">{{i.uom}}</td>
 
         </tr>
