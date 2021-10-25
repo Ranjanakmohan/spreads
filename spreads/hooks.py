@@ -109,6 +109,7 @@ doc_events = {
 	"Sales Order": {
 		"on_submit": "spreads.doc_events.sales_order.on_submit_so",
 		"validate": "spreads.doc_events.utils.validate_raw_material",
+		"on_trash": "spreads.doc_events.sales_order.on_trash_so",
 	},
 	"Quotation": {
 		"validate": "spreads.doc_events.utils.validate_raw_material",

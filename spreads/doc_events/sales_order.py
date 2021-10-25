@@ -2,6 +2,10 @@ import frappe
 from frappe.model.mapper import get_mapped_doc
 from frappe.utils import flt
 @frappe.whitelist()
+def on_trash_so(doc, method):
+    frappe.db.sql(""" UPDATE `tabCost Center` Set sales_order='' WHERE sales_order=%s""",doc.name)
+    frappe.db.commit()
+@frappe.whitelist()
 def generate_cc(name,customer):
     parent_cc = frappe.get_value("Global Defaults", "Global Defaults", "default_cost_center")
     if parent_cc:
