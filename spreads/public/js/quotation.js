@@ -1,4 +1,85 @@
 var warehouse = ""
+cur_frm.cscript.generate_item_template = function () {
+    let d = new frappe.ui.Dialog({
+        title: 'Enter details',
+        fields: [
+            {
+                label: 'Description',
+                fieldname: 'description',
+                fieldtype: 'Data',
+                reqd: 1
+            }
+        ],
+        primary_action_label: 'Submit',
+        primary_action(values) {
+            console.log(values)
+            frappe.call({
+                method: "spreads.doc_events.quotation.generate_item_templates",
+                args: {
+                    items: cur_frm.doc.items,
+                    description: values.description
+                },
+                async: false,
+                callback: function (r) {
+                        frappe.show_alert({
+                            message:__('BOM Item Template Created'),
+                            indicator:'green'
+                        }, 3);
+                }
+            })
+            d.hide();
+        }
+    });
+
+    d.show();
+
+}
+cur_frm.cscript.item_templates = function () {
+    var d = new frappe.ui.form.MultiSelectDialog({
+        doctype: "BOM Item Template",
+        target: this.cur_frm,
+        setters: {
+            description: null
+        },
+        add_filters_group: 1,
+        date_field: "posting_date",
+        get_query() {
+            return {
+                filters: { docstatus: ['!=', 2] }
+            }
+        },
+        action(selections) {
+            console.log(d)
+
+            get_template(selections, cur_frm)
+            d.dialog.hide()
+        }
+    });
+}
+function get_template(template_names, cur_frm){
+console.log("TESSSST")
+console.log(template_names)
+     frappe.call({
+        method: 'spreads.doc_events.quotation.get_templates',
+        args: {
+            doc: cur_frm.doc,
+            templates: template_names
+        },
+        freeze: true,
+        freeze_message: "Get Templates...",
+        async:false,
+        callback: function(r){
+            if(!cur_frm.doc.items[0].item_code){
+                cur_frm.clear_table("items")
+                cur_frm.refresh_field("items")
+            }
+            for(var x=0;x<r.message.length;x+=1){
+                cur_frm.add_child("items",r.message[x])
+                cur_frm.refresh_field("items")
+            }
+        }
+    })
+}
 frappe.ui.form.on('Quotation', {
 	refresh: function(frm) {
 		cur_frm.fields_dict["raw_material"].grid.add_custom_button(__('Update Available Stock'),
@@ -6,6 +87,17 @@ frappe.ui.form.on('Quotation', {
 				cur_frm.trigger('update_available_stock')
         });
         cur_frm.fields_dict["raw_material"].grid.grid_buttons.find('.btn-custom').removeClass('btn-default').addClass('btn-primary');
+
+
+         cur_frm.fields_dict["items"].grid.add_custom_button(__('Generate Item Template'),
+            function() {
+                cur_frm.trigger("generate_item_template")
+            }).css('background-color','#CCCC00').css('margin-left','10px').css('font-weight','bold')
+
+        cur_frm.fields_dict["items"].grid.add_custom_button(__('From Template'),
+			function() {
+	        cur_frm.trigger("item_templates")
+        }).css('background-color','brown').css('color','white').css('font-weight','bold')
 
 	}
 })

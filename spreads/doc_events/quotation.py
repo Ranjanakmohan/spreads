@@ -1,5 +1,48 @@
 import frappe, json
 from erpnext.stock.stock_ledger import get_previous_sle
+@frappe.whitelist()
+def get_templates(templates, doc):
+    data = json.loads(doc)
+    data_templates = json.loads(templates)
+    items = []
+    for i in data_templates:
+        template = frappe.get_doc("BOM Item Template", i)
+
+        for x in template.items:
+            rate = get_rate(x.item_code, "",data['rate_of_materials_based_on'] if data['rate_of_materials_based_on'] else "", data['price_list'] if data['price_list'] else "")
+            obj = {
+                'item_code': x.item_code,
+                'item_name': x.item_name,
+                'uom': x.uom,
+                'qty': x.qty,
+                'rate': rate[0],
+                'amount': rate[0] * x.qty,
+            }
+            items.append(obj)
+    return items
+def get_template_items(items):
+    items_ = []
+    for i in items:
+        items_.append({
+            "item_code": i['item_code'],
+            "item_name": i['item_name'],
+            "batch": i['batch'] if 'batch' in i and i['batch'] else "",
+            "qty": i['qty'],
+            "uom": i['uom'] if 'uom' in i and i['uom'] else "",
+        })
+    return items_
+@frappe.whitelist()
+def generate_item_templates(items, description):
+    print("GENEEEEEEEEEEEEEEEEEEEEEEEEERAAAAAAAAAAAAAAAAAAAAAATE")
+    data = json.loads(items)
+    obj = {
+        "doctype": "BOM Item Template",
+        "description": description,
+        "items": get_template_items(data)
+    }
+
+    frappe.get_doc(obj).insert()
+    return data
 
 @frappe.whitelist()
 def get_rate(item_code, warehouse, based_on,price_list):
