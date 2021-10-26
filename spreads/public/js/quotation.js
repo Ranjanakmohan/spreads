@@ -57,8 +57,6 @@ cur_frm.cscript.item_templates = function () {
     });
 }
 function get_template(template_names, cur_frm){
-console.log("TESSSST")
-console.log(template_names)
      frappe.call({
         method: 'spreads.doc_events.quotation.get_templates',
         args: {
@@ -76,6 +74,10 @@ console.log(template_names)
             for(var x=0;x<r.message.length;x+=1){
                 cur_frm.add_child("items",r.message[x])
                 cur_frm.refresh_field("items")
+            }
+            for(var x=0;x<r.message.length;x+=1){
+                cur_frm.add_child("raw_material",r.message[x])
+                cur_frm.refresh_field("raw_material")
             }
         }
     })
