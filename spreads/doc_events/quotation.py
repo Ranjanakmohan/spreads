@@ -5,6 +5,7 @@ def get_templates(templates, doc):
     data = json.loads(doc)
     data_templates = json.loads(templates)
     items = []
+    raw_items = []
     for i in data_templates:
         template = frappe.get_doc("BOM Item Template", i)
 
@@ -19,7 +20,21 @@ def get_templates(templates, doc):
                 'amount': rate[0] * x.qty,
             }
             items.append(obj)
-    return items
+
+        for x in template.raw_material:
+            rate = get_rate(x.item_code, "",data['rate_of_materials_based_on'] if data['rate_of_materials_based_on'] else "", data['price_list'] if data['price_list'] else "")
+            obj1 = {
+                'item_code': x.item_code,
+                'item_name': x.item_name,
+                'uom': x.uom,
+                'qty': x.qty,
+                'rate': rate[0],
+                'amount': rate[0] * x.qty,
+                'warehouse': x.warehouse,
+                'serial_no': x.serial_no,
+            }
+            raw_items.append(obj1)
+    return items, raw_items
 def get_template_items(items):
     items_ = []
     for i in items:
@@ -31,14 +46,30 @@ def get_template_items(items):
             "uom": i['uom'] if 'uom' in i and i['uom'] else "",
         })
     return items_
+def get_template_raw_items(items):
+    items_ = []
+    for i in items:
+        items_.append({
+            "item_code": i['item_code'],
+            "item_name": i['item_name'],
+            "qty": i['qty'],
+            "rate": i['rate'],
+            "amount": i['amount'],
+            "warehouse": i['warehouse'],
+            "uom": i['uom'] if 'uom' in i and i['uom'] else "",
+            "serial_no": i['serial_no'] if 'serial_no' in i and i['serial_no'] else "",
+        })
+    return items_
 @frappe.whitelist()
-def generate_item_templates(items, description):
+def generate_item_templates(items, raw_materials, description):
     print("GENEEEEEEEEEEEEEEEEEEEEEEEEERAAAAAAAAAAAAAAAAAAAAAATE")
     data = json.loads(items)
+    data_raw_materials = json.loads(raw_materials)
     obj = {
         "doctype": "BOM Item Template",
         "description": description,
-        "items": get_template_items(data)
+        "items": get_template_items(data),
+        "raw_material": get_template_raw_items(data_raw_materials),
     }
 
     frappe.get_doc(obj).insert()

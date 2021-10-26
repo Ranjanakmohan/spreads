@@ -8,7 +8,8 @@
  "field_order": [
   "naming_series",
   "description",
-  "items"
+  "items",
+  "raw_material"
  ],
  "fields": [
   {
@@ -30,11 +31,17 @@
    "fieldtype": "Select",
    "label": "Series",
    "options": "BIT-.YYYY.-"
+  },
+  {
+   "fieldname": "raw_material",
+   "fieldtype": "Table",
+   "label": "Raw Material",
+   "options": "Raw Material"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-10-09 09:21:02.129840",
+ "modified": "2021-10-26 12:38:44.185123",
  "modified_by": "Administrator",
  "module": "Spreads",
  "name": "BOM Item Template",

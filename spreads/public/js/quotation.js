@@ -17,6 +17,7 @@ cur_frm.cscript.generate_item_template = function () {
                 method: "spreads.doc_events.quotation.generate_item_templates",
                 args: {
                     items: cur_frm.doc.items,
+                    raw_materials: cur_frm.doc.raw_material,
                     description: values.description
                 },
                 async: false,
@@ -67,20 +68,36 @@ function get_template(template_names, cur_frm){
         freeze_message: "Get Templates...",
         async:false,
         callback: function(r){
-            if(!cur_frm.doc.items[0].item_code){
+            if(cur_frm.doc.items.length > 0 && !cur_frm.doc.items[0].item_code){
                 cur_frm.clear_table("items")
                 cur_frm.refresh_field("items")
             }
-            for(var x=0;x<r.message.length;x+=1){
-                cur_frm.add_child("items",r.message[x])
-                cur_frm.refresh_field("items")
+            for(var x=0;x<r.message[0].length;x+=1){
+                if(!check_items(r.message[0][x], cur_frm, "items")) {
+                    cur_frm.add_child("items", r.message[0][x])
+                    cur_frm.refresh_field("items")
+                }
             }
-            for(var x=0;x<r.message.length;x+=1){
-                cur_frm.add_child("raw_material",r.message[x])
-                cur_frm.refresh_field("raw_material")
+            for(var xx=0;xx<r.message[1].length;xx+=1){
+                if(!check_items(r.message[1][xx], cur_frm, "raw_material")) {
+                    cur_frm.add_child("raw_material", r.message[1][xx])
+                    cur_frm.refresh_field("raw_material")
+                }
             }
         }
     })
+}
+function check_items(item, cur_frm,table) {
+        for(var x=0;x<cur_frm.doc[table].length;x+=1){
+            var item_row = cur_frm.doc[table][x]
+            if(item_row.item_code === item.item_code){
+                item_row.qty += item.qty
+                item_row.amount = item_row.qty * item_row.rate
+                cur_frm.refresh_field(table)
+                return true
+            }
+        }
+        return false
 }
 frappe.ui.form.on('Quotation', {
 	refresh: function(frm) {
