@@ -88,6 +88,7 @@ function get_template(template_names, cur_frm){
     })
 }
 function check_items(item, cur_frm,table) {
+    if(cur_frm.doc[table]){
         for(var x=0;x<cur_frm.doc[table].length;x+=1){
             var item_row = cur_frm.doc[table][x]
             if(item_row.item_code === item.item_code){
@@ -98,6 +99,8 @@ function check_items(item, cur_frm,table) {
             }
         }
         return false
+    }
+
 }
 frappe.ui.form.on('Quotation', {
 	refresh: function(frm) {
