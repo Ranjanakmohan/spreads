@@ -37,13 +37,17 @@ def make_mr(source_name, target_doc=None):
             "doctype": "Material Request",
             "validation": {
                 "docstatus": ["=", 1]
-            }
+            },
+            "field_map": {
+                "delivery_date": "schedule_date",
+            },
         },
         "Raw Material": {
             "doctype": "Material Request Item",
             "field_map": {
                 "name": "raw_material",
-                "parent": "sales_order"
+                "parent": "sales_order",
+                "item_name": "description",
             },
         }
     }, target_doc)
