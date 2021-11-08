@@ -120,7 +120,14 @@ frappe.ui.form.on('Quotation', {
 			function() {
 	        cur_frm.trigger("item_templates")
         }).css('background-color','brown').css('color','white').css('font-weight','bold')
-
+        cur_frm.set_query("service_item", "raw_material", ()=>{
+           var names = Array.from(cur_frm.doc.items, x => "item_code" in x ? x.item_code:"")
+           return {
+               filters: [
+                   ["name", "in",names]
+               ]
+           }
+       })
 	}
 })
 cur_frm.cscript.update_available_stock = function () {

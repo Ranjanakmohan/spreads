@@ -25,6 +25,7 @@ def get_templates(templates, doc):
             rate = get_rate(x.item_code, "",data['rate_of_materials_based_on'] if data['rate_of_materials_based_on'] else "", data['price_list'] if data['price_list'] else "")
             obj1 = {
                 'item_code': x.item_code,
+                'service_item': x.service_item,
                 'item_name': x.item_name,
                 'uom': x.uom,
                 'qty': x.qty,
