@@ -29,8 +29,8 @@ def get_templates(templates, doc):
                 'item_name': x.item_name,
                 'uom': x.uom,
                 'qty': x.qty,
-                'rate': rate[0],
-                'amount': rate[0] * x.qty,
+                'rate':  x.rate,
+                'amount': x.rate * x.qty,
                 'warehouse': x.warehouse,
                 'serial_no': x.serial_no,
             }

@@ -84,6 +84,7 @@ function get_template(template_names, cur_frm){
                     cur_frm.refresh_field("raw_material")
                 }
             }
+            update_service_item(cur_frm)
         }
     })
 }
