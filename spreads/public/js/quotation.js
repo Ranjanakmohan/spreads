@@ -150,7 +150,10 @@ cur_frm.cscript.update_available_stock = function () {
 }
 
 frappe.ui.form.on('Raw Material', {
-	rate: function(frm, cdt, cdn) {
+	service_item: function(frm, cdt, cdn) {
+		update_service_item(cur_frm)
+	},
+    rate: function(frm, cdt, cdn) {
 		var d = locals[cdt][cdn]
         d.amount = d.rate * d.qty
         cur_frm.refresh_field("raw_material")
@@ -220,6 +223,7 @@ function total_raw_material(cur_frm) {
     cur_frm.doc.total_raw_material_expense = total
     cur_frm.refresh_field("total_raw_material_expense")
     total_expenses(cur_frm)
+    update_service_item(cur_frm)
 }
 cur_frm.cscript.product_bundle = function (frm,cdt,cdn) {
     if(cur_frm.doc.product_bundle){
@@ -307,4 +311,29 @@ cur_frm.cscript.update_serial_no = function () {
                }
             }
         })
+}
+
+function update_service_item(cur_frm) {
+    for(var x=0;x<cur_frm.doc.items.length;x+=1){
+        var total = 0
+        for(var y=0;y<cur_frm.doc.raw_material.length;y+=1){
+            if(cur_frm.doc.items[x].item_code === cur_frm.doc.raw_material[y].service_item){
+                total += cur_frm.doc.raw_material[y].amount
+            }
+        }
+        cur_frm.doc.items[x].rate = total
+        cur_frm.doc.items[x].amount = total * cur_frm.doc.items[x].qty
+        cur_frm.refresh_fields("items")
+    }
+    compute_total(cur_frm)
+}
+function compute_total(cur_frm) {
+    var total = 0
+    $.each(cur_frm.doc.items || [], function(i, items) {
+        total += items.amount
+    });
+    cur_frm.doc.total = total
+    cur_frm.doc.grand_total = total - (cur_frm.doc.discount_amount ? cur_frm.doc.discount_amount : 0)
+    cur_frm.doc.rounded_total =  cur_frm.doc.grand_total
+    cur_frm.refresh_fields(["total",'grand_total','rounded_total'])
 }
