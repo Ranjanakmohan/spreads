@@ -53,6 +53,7 @@ def get_template_raw_items(items):
         items_.append({
             "item_code": i['item_code'],
             "item_name": i['item_name'],
+            "service_item": i['service_item'],
             "qty": i['qty'],
             "rate": i['rate'],
             "amount": i['amount'],
