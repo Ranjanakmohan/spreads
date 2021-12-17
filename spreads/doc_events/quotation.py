@@ -14,6 +14,7 @@ def get_templates(templates, doc):
             obj = {
                 'item_code': x.item_code,
                 'item_name': x.item_name,
+                'description': x.item_name,
                 'uom': x.uom,
                 'qty': x.qty,
                 'rate': rate[0],
