@@ -58,7 +58,7 @@ def get_template_raw_items(items):
             "qty": i['qty'],
             "rate": i['rate'],
             "amount": i['amount'],
-            "warehouse": i['warehouse'],
+            "warehouse": i['warehouse'] if 'warehouse' in i else "",
             "uom": i['uom'] if 'uom' in i and i['uom'] else "",
             "serial_no": i['serial_no'] if 'serial_no' in i and i['serial_no'] else "",
         })
