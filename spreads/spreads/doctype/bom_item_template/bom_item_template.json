@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "autoname": "naming_series:",
  "creation": "2021-10-07 17:16:33.129082",
  "doctype": "DocType",
@@ -41,7 +42,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2021-10-26 12:38:44.185123",
+ "modified": "2021-12-18 02:06:56.180860",
  "modified_by": "Administrator",
  "module": "Spreads",
  "name": "BOM Item Template",
@@ -52,6 +53,7 @@
    "delete": 1,
    "email": 1,
    "export": 1,
+   "import": 1,
    "print": 1,
    "read": 1,
    "report": 1,
