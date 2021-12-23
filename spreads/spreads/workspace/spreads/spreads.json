@@ -139,7 +139,7 @@
    "type": "Link"
   }
  ],
- "modified": "2021-10-12 14:50:06.989064",
+ "modified": "2021-12-23 11:34:35.117082",
  "modified_by": "Administrator",
  "module": "Spreads",
  "name": "Spreads",
@@ -163,6 +163,12 @@
    "doc_view": "List",
    "label": "Sales Invoice",
    "link_to": "Sales Invoice",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "BOM Item Template",
+   "link_to": "BOM Item Template",
    "type": "DocType"
   }
  ],
