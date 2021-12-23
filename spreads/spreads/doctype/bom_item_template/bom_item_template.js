@@ -10,8 +10,7 @@ frappe.ui.form.on('BOM Item Template', {
 	    cur_frm.set_query("item_code", "items", ()=>{
            return {
                filters: {
-                   assembled_item: 1,
-                   item_group: 'Service Item'
+                   assembled_item: 1
                }
            }
        })
@@ -58,6 +57,9 @@ frappe.ui.form.on('Raw Material', {
     raw_material_add: function (frm, cdt, cdn) {
         var d = locals[cdt][cdn]
         d.warehouse = warehouse
+        if(cur_frm.doc.items.length > 0){
+            d.service_item = cur_frm.doc.items[0].item_code
+        }
         cur_frm.refresh_field("raw_material")
     }
 });
