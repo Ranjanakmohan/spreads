@@ -31,6 +31,7 @@ def get_templates(templates, doc):
                 'uom': x.uom,
                 'qty': x.qty,
                 'rate':  x.rate,
+                'buying_price': rate[1],
                 'amount': x.rate * x.qty,
                 'warehouse': x.warehouse,
                 'serial_no': x.serial_no,
@@ -90,32 +91,20 @@ def get_rate(item_code, warehouse, based_on,price_list):
             "posting_date": date,
             "posting_time": time
         })
-        # get actual stock at source warehouse
         balance = previous_sle.get("qty_after_transaction") or 0
 
-    condition = ""
-    if price_list == "Standard Buying":
-        condition += " and buying = 1 "
-    elif price_list == "Standard Selling":
-        condition += " and selling = 1 and price_list='{0}'".format('Standard Selling')
+    query_selling = """ SELECT * FROM `tabItem Price` WHERE item_code=%s and selling = 1 and price_list='Standard Selling' ORDER BY valid_from DESC LIMIT 1"""
+    item_price_selling = frappe.db.sql(query_selling,item_code, as_dict=1)
 
-    query = """ SELECT * FROM `tabItem Price` WHERE item_code=%s {0} ORDER BY valid_from DESC LIMIT 1""".format(condition)
+    query_buying = """ SELECT * FROM `tabItem Price` WHERE item_code=%s and buying = 1 and price_list='Standard Buying' ORDER BY valid_from DESC LIMIT 1"""
+    item_price_buying = frappe.db.sql(query_buying,item_code, as_dict=1)
 
-    item_price = frappe.db.sql(query,item_code, as_dict=1)
-    rate = item_price[0].price_list_rate if len(item_price) > 0 else 0
-    print(based_on)
-    if based_on == "Valuation Rate":
-        item_record = frappe.db.sql(
-            """ SELECT * FROM `tabItem` WHERE item_code=%s""",
-            item_code, as_dict=1)
-        rate = item_record[0].valuation_rate if len(item_record) > 0 else 0
-    if based_on == "Last Purchase Rate":
-        item_record = frappe.db.sql(
-            """ SELECT * FROM `tabItem` WHERE item_code=%s""",
-            item_code, as_dict=1)
-        rate = item_record[0].last_purchase_rate if len(item_record) > 0 else 0
 
-    return rate, balance
+    selling_rate = item_price_selling[0].price_list_rate if len(item_price_selling) > 0 else 0
+    buying_rate = item_price_buying[0].price_list_rate if len(item_price_buying) > 0 else 0
+
+
+    return selling_rate, buying_rate, balance
 
 @frappe.whitelist()
 def set_available_qty(items):

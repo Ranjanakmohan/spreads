@@ -11,6 +11,7 @@
   "service_item",
   "item_name",
   "uom",
+  "buying_price",
   "available_qty",
   "column_break_5",
   "qty",
@@ -39,7 +40,6 @@
    "default": "0",
    "fieldname": "available_qty",
    "fieldtype": "Float",
-   "in_list_view": 1,
    "label": "Available Qty",
    "read_only": 1
   },
@@ -96,12 +96,20 @@
    "in_list_view": 1,
    "label": "Service Item",
    "options": "Item"
+  },
+  {
+   "columns": 1,
+   "default": "0",
+   "fieldname": "buying_price",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Buying Price"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-23 13:27:44.839107",
+ "modified": "2021-12-29 12:13:08.953409",
  "modified_by": "Administrator",
  "module": "Spreads",
  "name": "Raw Material",

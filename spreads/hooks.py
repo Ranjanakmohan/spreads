@@ -263,11 +263,6 @@ fixtures = [
 					"Delivery Note-total_raw_material_expense",
 					"Delivery Note-section_break_902",
 
-					"Quotation-estimated_other_expense",
-					"Quotation-estimated_labor_expense",
-					"Quotation-estimated_transportation_expense",
-					"Quotation-estimated_admin_expense",
-					"Quotation-estimated_total_expense",
 					"Quotation-column_break_37",
 
 					"Sales Order-update_serial_no",
@@ -282,6 +277,8 @@ fixtures = [
 					"Sales Order-estimated_total_expense",
 					"Employee-petty_cash_account",
 					"Journal Entry-petty_cash_request",
+					"Quotation-raw_material_profit",
+					"Quotation-total_raw_material_buying_expense",
 				]
 			]
 		]

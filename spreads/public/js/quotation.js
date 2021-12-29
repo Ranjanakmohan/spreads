@@ -160,9 +160,11 @@ frappe.ui.form.on('Raw Material', {
         cur_frm.refresh_field("raw_material")
         total_raw_material(cur_frm)
 	},
+    buying_price: function(frm, cdt, cdn) {
+        total_raw_material(cur_frm)
+	},
     qty: function (frm,cdt,cdn) {
     var d = locals[cdt][cdn]
-
         d.amount = d.rate * d.qty
         cur_frm.refresh_field("raw_material")
         total_raw_material(cur_frm)
@@ -171,25 +173,29 @@ frappe.ui.form.on('Raw Material', {
     item_code: function (frm,cdt, cdn) {
 
     var d = locals[cdt][cdn]
-    if(d.item_code){
+        if(d.item_code){
 
-        frappe.call({
-            method: "spreads.doc_events.quotation.get_rate",
-            args: {
-                item_code: d.item_code,
-                warehouse: d.warehouse ? d.warehouse : "",
-                based_on: cur_frm.doc.rate_of_materials_based_on ? cur_frm.doc.rate_of_materials_based_on : "",
-                price_list: cur_frm.doc.price_list ? cur_frm.doc.price_list : ""
+            frappe.call({
+                method: "spreads.doc_events.quotation.get_rate",
+                args: {
+                    item_code: d.item_code,
+                    warehouse: d.warehouse ? d.warehouse : "",
+                    based_on: cur_frm.doc.rate_of_materials_based_on ? cur_frm.doc.rate_of_materials_based_on : "",
+                    price_list: cur_frm.doc.price_list ? cur_frm.doc.price_list : ""
 
-            },
-            callback: function (r) {
-                d.rate = r.message[0]
-                d.amount = r.message[0] * d.qty
-                d.available_qty = r.message[1]
+                },
+                async: false,
+                callback: function (r) {
+                    console.log(r.message[0])
+                    d.buying_price = r.message[1]
+                    d.rate = r.message[0]
+                    d.amount = r.message[0] * d.qty
+                    d.available_qty = r.message[2]
 
-                cur_frm.refresh_field("raw_material")
-            }
-        })
+                    cur_frm.refresh_field("raw_material")
+                    total_raw_material(cur_frm)
+                }
+            })
     }
 
     },
@@ -207,10 +213,12 @@ frappe.ui.form.on('Raw Material', {
 
             },
             callback: function (r) {
-                d.rate = r.message[0]
-                d.amount = r.message[0] * d.qty
-                d.available_qty = r.message[1]
+               d.buying_price = r.message[1]
+                    d.rate = r.message[0]
+                    d.amount = r.message[0] * d.qty
+                    d.available_qty = r.message[2]
                 cur_frm.refresh_field("raw_material")
+                total_raw_material(cur_frm)
             }
         })
     }
@@ -218,11 +226,15 @@ frappe.ui.form.on('Raw Material', {
 })
 function total_raw_material(cur_frm) {
     var total = 0
+    var total_buying = 0
     for(var x=0;x<cur_frm.doc.raw_material.length;x += 1){
         total += cur_frm.doc.raw_material[x].amount
+        total_buying += (cur_frm.doc.raw_material[x].buying_price * cur_frm.doc.raw_material[x].qty)
     }
     cur_frm.doc.total_raw_material_expense = total
-    cur_frm.refresh_field("total_raw_material_expense")
+    cur_frm.doc.total_raw_material_buying_expense = total_buying
+    cur_frm.doc.raw_material_profit = total_buying - total
+    cur_frm.refresh_fields(["total_raw_material_expense","total_raw_material_buying_expense", "raw_material_profit"])
     total_expenses(cur_frm)
     update_service_item(cur_frm)
 }
@@ -315,6 +327,7 @@ cur_frm.cscript.update_serial_no = function () {
 }
 
 function update_service_item(cur_frm) {
+    console.log("asd")
     for(var x=0;x<cur_frm.doc.items.length;x+=1){
         var total = 0
         for(var y=0;y<cur_frm.doc.raw_material.length;y+=1){
