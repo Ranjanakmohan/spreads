@@ -100,16 +100,16 @@
   {
    "columns": 1,
    "default": "0",
+   "depends_on": "eval: !(frappe.user.has_role(\"Sales User\")) || frappe.user.has_role(\"System Manager\")",
    "fieldname": "buying_price",
    "fieldtype": "Currency",
-   "in_list_view": 1,
    "label": "Buying Price"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2021-12-29 12:13:08.953409",
+ "modified": "2021-12-30 12:02:51.537888",
  "modified_by": "Administrator",
  "module": "Spreads",
  "name": "Raw Material",
