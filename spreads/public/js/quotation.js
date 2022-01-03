@@ -85,6 +85,7 @@ function get_template(template_names, cur_frm){
                 }
             }
             update_service_item(cur_frm)
+             total_raw_material(cur_frm)
         }
     })
 }
