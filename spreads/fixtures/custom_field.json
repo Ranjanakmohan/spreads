@@ -1885,7 +1885,7 @@
   "label": "Total Raw Material Buying Expense",
   "length": 0,
   "mandatory_depends_on": null,
-  "modified": "2021-12-29 10:28:44.160044",
+  "modified": "2021-12-30 10:28:44.160044",
   "name": "Quotation-total_raw_material_buying_expense",
   "no_copy": 0,
   "non_negative": 0,
