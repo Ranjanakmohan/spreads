@@ -28,6 +28,7 @@ def get_templates(templates, doc):
                 'item_code': x.item_code,
                 'service_item': x.service_item,
                 'item_name': x.item_name,
+                'description': x.item_name,
                 'uom': x.uom,
                 'qty': x.qty,
                 'rate':  x.rate,
