@@ -234,7 +234,7 @@ function total_raw_material(cur_frm) {
     }
     cur_frm.doc.total_raw_material_expense = total
     cur_frm.doc.total_raw_material_buying_expense = total_buying
-    cur_frm.doc.raw_material_profit = total_buying - total
+    cur_frm.doc.raw_material_profit = total - total_buying
     cur_frm.refresh_fields(["total_raw_material_expense","total_raw_material_buying_expense", "raw_material_profit"])
     total_expenses(cur_frm)
     update_service_item(cur_frm)
