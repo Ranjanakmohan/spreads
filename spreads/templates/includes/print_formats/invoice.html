@@ -110,15 +110,17 @@
 {%else%}
     <table style="width: 100%;margin-top: 1%;border-bottom: 3px solid blue;">
         <tr style="background-color: #ff9933">
-            <td class="text-center" style="width: 10%">{{_("Qty")}}</td>
             <td  style="width: 40%">{{_("Service Description")}}</td>
+                        <td class="text-center" style="width: 10%">{{_("Qty")}}</td>
+
             <td class="text-center" style="width: 25%">{{_("Price")}}</td>
             <td class="text-center" style="width: 25%">{{_("Total")}}</td>
         </tr>
         {%for i in doc.items%}
             <tr>
-                <td class="text-center" style="width: 10%">{{i.qty | int}}</td>
                 <td style="width: 40%">{{i.item_name}}</td>
+                                <td class="text-center" style="width: 10%">{{i.qty | int}}</td>
+
                 <td class="text-center" style="width: 25%">{{frappe.utils.fmt_money(i.rate,currency=doc.currency)}}</td>
                 <td class="text-center" style="width: 25%">{{frappe.utils.fmt_money(i.amount,currency=doc.currency)}}</td>
             </tr>
@@ -127,17 +129,18 @@
     </table>
     <table style="width: 100%;margin-top: 1%;border-bottom: 3px solid blue;">
     <tr style="background-color: #ff9933">
+
+        <td  style="width: 40%">{{_("Material Description")}}</td>
         <td class="text-center" style="width: 10%">{{_("Qty")}}</td>
-
-        <td  colspan="2" style="width: 65%">{{_("Material Description")}}</td>
-
+        <td class="text-center" style="width: 25%"></td>
         <td class="text-center" style="width: 25%">{{_("UOM")}}</td>
     </tr>
     {%for i in doc.raw_material%}
         <tr>
-            <td class="text-center" style="width: 10%">{{i.qty | int}}</td>
-            <td colspan="2" style="width: 65%">{{i.item_name}}</td>
-            <td class="text-center" style="width: 25%">{{i.uom}}</td>
+            <td  >{{i.item_name}}</td>
+            <td class="text-center" >{{i.qty | int}}</td>
+            <td class="text-center" ></td>
+            <td class="text-center" >{{i.uom}}</td>
 
         </tr>
     {%endfor%}
