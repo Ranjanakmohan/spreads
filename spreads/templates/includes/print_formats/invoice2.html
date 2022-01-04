@@ -129,17 +129,19 @@
     <tr style="background-color: #ff9933">
 
         <td  style="width: 40%">{{_("Material Description")}}</td>
+                <td class="text-center" style="width: 15%">{{_("UOM")}}</td>
+
         <td class="text-center" style="width: 15%">{{_("Qty")}}</td>
         <td class="text-center" style="width: 15%">{{_("Price")}}</td>
-        <td class="text-center" style="width: 15%">{{_("UOM")}}</td>
         <td class="text-center" style="width: 15%">{{_("Total")}}</td>
     </tr>
     {%for i in doc.raw_material%}
         <tr>
             <td  >{{i.item_name}}</td>
+                        <td class="text-center" >{{i.uom}}</td>
+
             <td class="text-center" >{{i.qty | int}}</td>
             <td class="text-center" >{{i.rate}}</td>
-            <td class="text-center" >{{i.uom}}</td>
             <td class="text-center" >{{i.amount}}</td>
 
         </tr>
