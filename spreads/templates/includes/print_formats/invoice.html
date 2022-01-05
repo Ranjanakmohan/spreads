@@ -157,9 +157,44 @@
         <td class="text-right" style="width: 35%;background-color: white">{{_("Discount")}}</td>
         <td class="text-right" style="width: 25%;background-color: white">{{frappe.utils.fmt_money(doc.discount_amount,currency=doc.currency)}}</td>
     </tr>
+   <tr>
+       {%if doc.taxes | length > 0%}
+           {%for i in doc.taxes%}
+                {%if i.idx == 1%}
+                       <td colspan="2" class="text-left" style="font-size: small;width: 50%;background-color: white"><b>{{_("Payment Method")}}</b></td>
+
+                {%else%}
+                    {%if i.idx == 2%}
+                       <td colspan="2" class="text-left" style="font-size: small;width: 50%;background-color: white">
+                           {%for i in doc.payment_schedule%}
+                                {%if i.description%}
+                                    {{i.description}},
+                                {%endif%}
+                            {%endfor%}
+                       </td>
+                    {%else%}
+                        <td colspan="2" class="text-left" style="font-size: small;width: 50%;background-color: white">
+
+                       </td>
+                    {%endif%}
+                {%endif%}
+                <td class="text-right" style="width: 25%;background-color: white">{{i.description}}</td>
+                <td class="text-right" style="width: 25%;background-color: white">{{frappe.utils.fmt_money(i.tax_amount,currency=doc.currency)}}</td>
+
+   </tr>
+           {%endfor%}
+       {%endif%}
     <tr>
         <td colspan="2" class="text-left" style="width: 50%;background-color: white">
-
+            {%if doc.taxes | length == 1%}
+                <span style="font-size: smaller">
+                    {%for i in doc.payment_schedule%}
+                        {%if i.description%}
+                            {{i.description}},
+                        {%endif%}
+                    {%endfor%}
+                </span>
+            {%endif%}
         </td>
         <td class="text-center" style="width: 25%;background-color: white"></td>
         <td class="text-right" style="width: 25%;font-size: larger;background-color: #ff9933">{{frappe.utils.fmt_money(doc.grand_total,currency=doc.currency)}}</td>
