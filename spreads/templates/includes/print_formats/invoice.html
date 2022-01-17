@@ -152,17 +152,17 @@
         <td class="text-right" style="width: 35%;background-color: white">{{_("Subtotal")}}</td>
         <td class="text-right" style="width: 25%;background-color: white">{{frappe.utils.fmt_money(doc.total,currency=doc.currency)}}</td>
     </tr>
+    {%if doc.discount or doc.discount > 0%}
      <tr>
         <td colspan="2" class="text-center" style="width: 40%;background-color: white"></td>
         <td class="text-right" style="width: 35%;background-color: white">{{_("Discount")}}</td>
         <td class="text-right" style="width: 25%;background-color: white">{{frappe.utils.fmt_money(doc.discount_amount,currency=doc.currency)}}</td>
     </tr>
+    {%endif%}
    <tr>
        {%if doc.taxes | length > 0%}
            {%for i in doc.taxes%}
                 {%if i.idx == 1%}
-                       <td colspan="2" class="text-left" style="font-size: small;width: 50%;background-color: white"><b>{{_("Payment Method")}}</b></td>
-
                 {%else%}
                     {%if i.idx == 2%}
                        <td colspan="2" class="text-left" style="font-size: small;width: 50%;background-color: white">

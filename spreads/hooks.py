@@ -280,6 +280,8 @@ fixtures = [
 
 					"Quotation-raw_material_profit",
 					"Quotation-total_raw_material_buying_expense",
+					"Sales Order-raw_material_profit",
+					"Sales Order-total_raw_material_buying_expense",
 				]
 			]
 		]
