@@ -169,11 +169,13 @@
     {%endif%}
 
     {%for i in doc.taxes%}
+        {%if not i.included_in_print_rate%}
             <tr>
-            <td colspan="2" class="text-center" style="width: 40%;background-color: white"></td>
-            <td class="text-right" style="width: 35%;background-color: white">{{i.description}}</td>
-            <td class="text-right" style="width: 25%;background-color: white">{{frappe.utils.fmt_money(i.tax_amount,currency=doc.currency)}}</td>
-    </tr>
+                <td colspan="2" class="text-center" style="width: 40%;background-color: white"></td>
+                <td class="text-right" style="width: 35%;background-color: white">{{i.description}}</td>
+                <td class="text-right" style="width: 25%;background-color: white">{{frappe.utils.fmt_money(i.tax_amount,currency=doc.currency)}}</td>
+            </tr>
+        {%endif%}
     {%endfor%}
     <tr>
         <td colspan="2" class="text-left" style="width: 50%;background-color: white"></td>
