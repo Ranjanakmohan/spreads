@@ -120,7 +120,7 @@
         </tr>
         {%for i in doc.items%}
             <tr>
-                <td >{{i.item_name}}</td>
+                <td >{{i.description}}</td>
                 <td class="text-center" style="width: 10%">{{i.qty | int}}</td>
                 <td class="text-center" >{{frappe.utils.fmt_money(i.rate,currency=doc.currency)}}</td>
                 <td class="text-center" >{{frappe.utils.fmt_money(i.amount,currency=doc.currency)}}</td>
@@ -140,7 +140,7 @@
     </tr>
     {%for i in doc.raw_material%}
         <tr>
-            <td  >{{i.item_name}}</td>
+            <td  >{{i.description}}</td>
                         <td class="text-center" >{{i.uom}}</td>
 
             <td class="text-center" >{{i.qty | int}}</td>
