@@ -40,7 +40,7 @@ def get_templates(templates, doc):
                 'qty': x.qty,
                 'rate':  rate[0],
                 'buying_price': rate[1],
-                'amount': x.rate * x.qty,
+                'amount': rate[0] * x.qty,
                 'warehouse': x.warehouse,
                 'serial_no': x.serial_no,
             }
