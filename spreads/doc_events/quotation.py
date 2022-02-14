@@ -149,3 +149,12 @@ def filter_item(doctype, txt, searchfield, start, page_len, filters):
         'start': start,
         'page_len': page_len
     })
+
+@frappe.whitelist()
+def update_price(items,price_list):
+    if items:
+        data = json.loads(items)
+        for d in data:
+            d['rate'] = get_rate(d['item_code'],d['warehouse'], "", price_list)[0]
+        return data
+    return []

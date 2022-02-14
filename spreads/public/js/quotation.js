@@ -104,7 +104,35 @@ function check_items(item, cur_frm,table) {
     }
 
 }
+cur_frm.cscript.update_price_list = function () {
+     frappe.call({
+            method: "spreads.doc_events.quotation.update_price",
+            args: {
+                items: cur_frm.doc.raw_material ? cur_frm.doc.raw_material : [],
+                price_list: cur_frm.doc.selling_price_list
+            },
+            callback: function (r) {
+                var objIndex = 0
+               for(var x=0;x<r.message.length;x+=1){
+                    console.log("NAA")
+                   objIndex = cur_frm.doc.raw_material.findIndex(obj => obj.name === r.message[x]['name'])
+
+                    cur_frm.doc.raw_material[objIndex].rate = r.message[x]['rate']
+                    cur_frm.doc.raw_material[objIndex].amount = r.message[x]['rate'] * r.message[x]['qty']
+                   cur_frm.refresh_field("raw_material")
+                   total_raw_material(cur_frm)
+               }
+            }
+        })
+}
 frappe.ui.form.on('Quotation', {
+    selling_price_list: function () {
+        if(cur_frm.doc.selling_price_list){
+             console.log("SELLING PRICE LIST")
+      cur_frm.trigger("update_price_list")
+        }
+
+    },
 	refresh: function(frm) {
 		cur_frm.fields_dict["raw_material"].grid.add_custom_button(__('Update Available Stock'),
 			function() {
