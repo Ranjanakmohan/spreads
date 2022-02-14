@@ -62,8 +62,8 @@ function get_template(template_names, cur_frm){
      frappe.call({
         method: 'spreads.doc_events.quotation.get_templates',
         args: {
+            templates: template_names,
             doc: cur_frm.doc,
-            templates: template_names
         },
         freeze: true,
         freeze_message: "Get Templates...",

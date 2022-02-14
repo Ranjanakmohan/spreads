@@ -4,13 +4,20 @@ from erpnext.stock.stock_ledger import get_previous_sle
 def get_templates(templates, doc):
     data = json.loads(doc)
     data_templates = json.loads(templates)
+    print("=======================================")
+    print(data)
+    print(data['selling_price_list'])
+    print(data_templates)
     items = []
     raw_items = []
     for i in data_templates:
         template = frappe.get_doc("BOM Item Template", i)
 
         for x in template.items:
-            rate = get_rate(x.item_code, "",data['rate_of_materials_based_on'] if data['rate_of_materials_based_on'] else "", data['price_list'] if data['price_list'] else "")
+            rate = get_rate(x.item_code, "",data['rate_of_materials_based_on'] if data['rate_of_materials_based_on'] else "", data['selling_price_list'] if data['selling_price_list'] else "")
+            print("ITEM COOOODOE")
+            print(x.item_code)
+            print(rate[0])
             obj = {
                 'item_code': x.item_code,
                 'item_name': x.item_name,
@@ -23,7 +30,7 @@ def get_templates(templates, doc):
             items.append(obj)
 
         for x in template.raw_material:
-            rate = get_rate(x.item_code, "",data['rate_of_materials_based_on'] if data['rate_of_materials_based_on'] else "", data['price_list'] if data['price_list'] else "")
+            rate = get_rate(x.item_code, "",data['rate_of_materials_based_on'] if data['rate_of_materials_based_on'] else "", data['selling_price_list'] if data['selling_price_list'] else "")
             obj1 = {
                 'item_code': x.item_code,
                 'service_item': x.service_item,
@@ -31,7 +38,7 @@ def get_templates(templates, doc):
                 'description': x.item_name,
                 'uom': x.uom,
                 'qty': x.qty,
-                'rate':  x.rate,
+                'rate':  rate[0],
                 'buying_price': rate[1],
                 'amount': x.rate * x.qty,
                 'warehouse': x.warehouse,
