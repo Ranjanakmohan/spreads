@@ -218,7 +218,7 @@ frappe.ui.form.on('Raw Material', {
                     item_code: d.item_code,
                     warehouse: d.warehouse ? d.warehouse : "",
                     based_on: cur_frm.doc.rate_of_materials_based_on ? cur_frm.doc.rate_of_materials_based_on : "",
-                    price_list: cur_frm.doc.price_list ? cur_frm.doc.price_list : ""
+                   price_list: cur_frm.doc.selling_price_list ? cur_frm.doc.selling_price_list : ""
 
                 },
                 async: false,
@@ -246,7 +246,7 @@ frappe.ui.form.on('Raw Material', {
                 item_code: d.item_code,
                 warehouse: d.warehouse ? d.warehouse : "",
                 based_on: cur_frm.doc.rate_of_materials_based_on ? cur_frm.doc.rate_of_materials_based_on : "",
-                price_list: cur_frm.doc.price_list ? cur_frm.doc.price_list : ""
+               price_list: cur_frm.doc.selling_price_list ? cur_frm.doc.selling_price_list : ""
 
             },
             callback: function (r) {

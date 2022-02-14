@@ -182,7 +182,7 @@ frappe.ui.form.on('Raw Material', {
                     item_code: d.item_code,
                     warehouse: d.warehouse ? d.warehouse : "",
                     based_on: cur_frm.doc.rate_of_materials_based_on ? cur_frm.doc.rate_of_materials_based_on : "",
-                    price_list: cur_frm.doc.price_list ? cur_frm.doc.price_list : ""
+                    price_list: cur_frm.doc.selling_price_list ? cur_frm.doc.selling_price_list : ""
 
                 },
                 async: false,
@@ -210,16 +210,16 @@ frappe.ui.form.on('Raw Material', {
                 item_code: d.item_code,
                 warehouse: d.warehouse ? d.warehouse : "",
                 based_on: cur_frm.doc.rate_of_materials_based_on ? cur_frm.doc.rate_of_materials_based_on : "",
-                price_list: cur_frm.doc.price_list ? cur_frm.doc.price_list : ""
+                price_list: cur_frm.doc.selling_price_list ? cur_frm.doc.selling_price_list : ""
 
             },
             callback: function (r) {
-               d.buying_price = r.message[1]
+                    d.buying_price = r.message[1]
                     d.rate = r.message[0]
                     d.amount = r.message[0] * d.qty
                     d.available_qty = r.message[2]
-                cur_frm.refresh_field("raw_material")
-                total_raw_material(cur_frm)
+                    cur_frm.refresh_field("raw_material")
+                    total_raw_material(cur_frm)
             }
         })
     }

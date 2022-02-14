@@ -94,8 +94,8 @@ def get_rate(item_code, warehouse, based_on,price_list):
         })
         balance = previous_sle.get("qty_after_transaction") or 0
 
-    query_selling = """ SELECT * FROM `tabItem Price` WHERE item_code=%s and selling = 1 and price_list='Standard Selling' ORDER BY valid_from DESC LIMIT 1"""
-    item_price_selling = frappe.db.sql(query_selling,item_code, as_dict=1)
+    query_selling = """ SELECT * FROM `tabItem Price` WHERE item_code=%s and selling = 1 and price_list=%s ORDER BY valid_from DESC LIMIT 1"""
+    item_price_selling = frappe.db.sql(query_selling,(item_code,price_list), as_dict=1)
 
     query_buying = """ SELECT * FROM `tabItem Price` WHERE item_code=%s and buying = 1 and price_list='Standard Buying' ORDER BY valid_from DESC LIMIT 1"""
     item_price_buying = frappe.db.sql(query_buying,item_code, as_dict=1)

@@ -29,9 +29,9 @@
         <h6>
             <span><b>{{_("Date")}}:</b>
                 {%if doc.doctype == 'Sales Invoice'%}
-                     {{frappe.utils.formatdate(doc.get_formatted('posting_date'), "dd-MM-yyyy") }}
+                     {{frappe.utils.formatdate(doc.get_formatted('posting_date'), "MM-dd-yyyy") }}
                 {%else%}
-                    {{frappe.utils.formatdate(doc.get_formatted('transaction_date'), "dd-MM-yyyy") }}
+                    {{frappe.utils.formatdate(doc.get_formatted('transaction_date'), "MM-dd-yyyy") }}
                 {%endif%}
 
             </span>
