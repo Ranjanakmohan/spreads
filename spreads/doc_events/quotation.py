@@ -50,7 +50,7 @@ def get_template_items(items):
             "uom": i['uom'] if 'uom' in i and i['uom'] else "",
         })
     return items_
-def get_template_raw_items(items):
+def get_template_raw_items(items,price_list):
     items_ = []
     for i in items:
         items_.append({
@@ -58,7 +58,7 @@ def get_template_raw_items(items):
             "item_name": i['item_name'],
             "service_item": i['service_item'],
             "qty": i['qty'],
-            "rate": i['rate'],
+            "rate": get_rate(i['item_code'],i['warehouse'], "", price_list)[0],
             "amount": i['amount'],
             "warehouse": i['warehouse'] if 'warehouse' in i else "",
             "uom": i['uom'] if 'uom' in i and i['uom'] else "",
@@ -66,7 +66,7 @@ def get_template_raw_items(items):
         })
     return items_
 @frappe.whitelist()
-def generate_item_templates(items, raw_materials, description):
+def generate_item_templates(items, raw_materials, description,price_list):
     print("GENEEEEEEEEEEEEEEEEEEEEEEEEERAAAAAAAAAAAAAAAAAAAAAATE")
     data = json.loads(items)
     data_raw_materials = json.loads(raw_materials)
@@ -74,7 +74,7 @@ def generate_item_templates(items, raw_materials, description):
         "doctype": "BOM Item Template",
         "description": description,
         "items": get_template_items(data),
-        "raw_material": get_template_raw_items(data_raw_materials),
+        "raw_material": get_template_raw_items(data_raw_materials,price_list),
     }
 
     frappe.get_doc(obj).insert()

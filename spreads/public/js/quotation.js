@@ -18,7 +18,8 @@ cur_frm.cscript.generate_item_template = function () {
                 args: {
                     items: cur_frm.doc.items,
                     raw_materials: cur_frm.doc.raw_material,
-                    description: values.description
+                    description: values.description,
+                    price_list: cur_frm.doc.selling_price_list
                 },
                 async: false,
                 callback: function (r) {
@@ -193,7 +194,7 @@ frappe.ui.form.on('Raw Material', {
         total_raw_material(cur_frm)
 	},
     qty: function (frm,cdt,cdn) {
-    var d = locals[cdt][cdn]
+        var d = locals[cdt][cdn]
         d.amount = d.rate * d.qty
         cur_frm.refresh_field("raw_material")
         total_raw_material(cur_frm)
