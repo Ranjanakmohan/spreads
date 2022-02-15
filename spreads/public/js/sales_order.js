@@ -163,13 +163,14 @@ frappe.ui.form.on('Sales Order', {
         });
         cur_frm.fields_dict["raw_material"].grid.grid_buttons.find('.btn-custom').removeClass('btn-default').addClass('btn-primary');
 
-        cur_frm.set_query("service_item", "raw_material", () => {
-            return {
-                filters: {
-                    assembled_item: 1
-                }
-            }
-        })
+        cur_frm.set_query("service_item", "raw_material", ()=>{
+           var names = Array.from(cur_frm.doc.items, x => "item_code" in x ? x.item_code:"")
+           return {
+               filters: [
+                   ["name", "in",names]
+               ]
+           }
+       })
 	}
 })
 cur_frm.cscript.update_available_stock = function () {
