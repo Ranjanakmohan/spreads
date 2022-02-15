@@ -153,6 +153,7 @@ frappe.call({
 })
 }
 frappe.ui.form.on('Sales Order', {
+
     selling_price_list: function () {
       cur_frm.trigger("update_price_list")
     },
@@ -167,7 +168,9 @@ frappe.ui.form.on('Sales Order', {
            var names = Array.from(cur_frm.doc.items, x => "item_code" in x ? x.item_code:"")
            return {
                filters: [
-                   ["name", "in",names]
+                   ["name", "in",names],
+                   ["assembled_item", "=",1],
+
                ]
            }
        })
@@ -287,22 +290,25 @@ frappe.ui.form.on('Raw Material', {
 }
 })
 function update_service_item(cur_frm) {
-    console.log("asd")
-    for(var x=0;x<cur_frm.doc.items.length;x+=1){
-        var total = 0
-        for(var y=0;y<cur_frm.doc.raw_material.length;y+=1){
-            if(cur_frm.doc.items[x].item_code === cur_frm.doc.raw_material[y].service_item){
-                total += cur_frm.doc.raw_material[y].amount
+    if(cur_frm.doc.docstatus === 0){
+        for (var x = 0; x < cur_frm.doc.items.length; x += 1) {
+            var total = 0
+            for (var y = 0; y < cur_frm.doc.raw_material.length; y += 1) {
+                if (cur_frm.doc.items[x].item_code === cur_frm.doc.raw_material[y].service_item) {
+                    total += cur_frm.doc.raw_material[y].amount
+                }
             }
+            cur_frm.doc.items[x].rate = total
+            cur_frm.doc.items[x].amount = total * cur_frm.doc.items[x].qty
+            cur_frm.refresh_fields("items")
+            compute_total(cur_frm)
         }
-        cur_frm.doc.items[x].rate = total
-        cur_frm.doc.items[x].amount = total * cur_frm.doc.items[x].qty
-        cur_frm.refresh_fields("items")
     }
-    compute_total(cur_frm)
+
 }
 function total_raw_material(cur_frm) {
-    var total = 0
+    if(cur_frm.doc.docstatus === 0){
+        var total = 0
     var total_buying = 0
     for(var x=0;x<cur_frm.doc.raw_material.length;x += 1){
         total += cur_frm.doc.raw_material[x].amount
@@ -314,16 +320,36 @@ function total_raw_material(cur_frm) {
     cur_frm.refresh_fields(["total_raw_material_expense","total_raw_material_buying_expense", "raw_material_profit"])
     total_expenses(cur_frm)
     update_service_item(cur_frm)
+    }
+
+}
+function compute_total_submitted(cur_frm,data) {
+    console.log("DATAAAAAAAAAAAAAAAAAA")
+    console.log(data)
+    if(data.length > 0){
+        frappe.call({
+        method: "erpnext.controllers.accounts_controller.update_child_qty_rate",
+        args: {
+            parent_doctype: "Sales Order",
+            trans_items: data,
+            parent_doctype_name: cur_frm.doc.name,
+        },
+        async: false,
+        callback: function () {        }
+    })
+    }
+
 }
 function compute_total(cur_frm) {
     var total = 0
     $.each(cur_frm.doc.items || [], function(i, items) {
         total += items.amount
     });
+
     cur_frm.doc.total = total
     cur_frm.doc.grand_total = total - (cur_frm.doc.discount_amount ? cur_frm.doc.discount_amount : 0)
     cur_frm.doc.rounded_total =  cur_frm.doc.grand_total
-    cur_frm.refresh_fields(["total",'grand_total','rounded_total'])
+    cur_frm.refresh_fields(['total','grand_total','rounded_total'])
 }
 cur_frm.cscript.raw_material_add = function (frm, cdt, cdn) {
     var d = locals[cdt][cdn]
