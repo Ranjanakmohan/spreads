@@ -14,10 +14,10 @@ def update_raw_material(parent_doctype,raw_material,parent_doctype_name,child_do
     for i in items:
         total = 0
         for x in raw_materials:
-
+            rate = x['rate'] if 'rate' in x else 0
             if x['service_item']:
                 if i.item_code == x['service_item']:
-                    total += (x['qty'] * x['rate'])
+                    total += (x['qty'] * rate)
         data.append({
             "docname": i.name,
             "name": i.name,
@@ -36,7 +36,8 @@ def update_raw_material(parent_doctype,raw_material,parent_doctype_name,child_do
 def create_raw_material(items,parent_doctype_name):
     total_raw_material_expense = total_raw_material_buying_expense = 0
     for item in items:
-        total_raw_material_expense += (item['qty'] * item['rate'])
+        rate = item['rate'] if 'rate' in item else 0
+        total_raw_material_expense += (item['qty'] * rate)
         buying_price = item['buying_price'] if 'buying_price' in item else 0
         total_raw_material_buying_expense += (item['qty'] * buying_price)
         item['parent'] = parent_doctype_name
