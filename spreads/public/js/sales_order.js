@@ -295,7 +295,9 @@ erpnext.utils.update_raw_items = function(opts) {
 			"conversion_factor": d.conversion_factor,
 			"qty": d.qty,
 			"rate": d.rate,
-			"uom": d.uom
+			"uom": d.uom,
+			"buying_price": d.buying_price,
+			"warehouse": d.warehouse,
 		});
 		this.data = dialog.fields_dict.trans_items.df.data;
 		dialog.fields_dict.trans_items.grid.refresh();
