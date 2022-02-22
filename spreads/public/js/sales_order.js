@@ -177,20 +177,13 @@ erpnext.utils.update_raw_items = function(opts) {
 		label: __('Item Code'),
 		get_query: function() {
 			let filters;
-			if (frm.doc.doctype === 'Sales Order') {
-				filters = {"is_sales_item": 1};
-			} else if (frm.doc.doctype === 'Purchase Order') {
-				if (frm.doc.is_subcontracted === "Yes") {
-					filters = {"is_sub_contracted_item": 1};
-				} else {
-					filters = {"is_purchase_item": 1};
-				}
-			}
+				filters = {"is_stock_item": 1};
+
 			return {
 				query: "erpnext.controllers.queries.item_query",
 				filters: filters
 			};
-		}
+		},
 	},{
 		fieldtype:'Link',
 		options:'Item',
@@ -302,6 +295,30 @@ erpnext.utils.update_raw_items = function(opts) {
 		this.data = dialog.fields_dict.trans_items.df.data;
 		dialog.fields_dict.trans_items.grid.refresh();
 	})
+
+    dialog.fields_dict.trans_items.grid.wrapper.on('change', 'input[data-fieldname="item_code"]', function(e, es) {
+console.log("EEEE")
+        console.log(e)
+        const item_code = e.target.value
+            if(item_code){
+						     frappe.call({
+                                method: "spreads.doc_events.quotation.get_rate",
+                                args: {
+                                    item_code: item_code,
+                                    warehouse: "",
+                                    based_on: cur_frm.doc.rate_of_materials_based_on ? cur_frm.doc.rate_of_materials_based_on : "",
+                                   price_list: cur_frm.doc.selling_price_list ? cur_frm.doc.selling_price_list : ""
+
+                                },
+                                async: false,
+                                callback: function (r) {
+                                    this.grid_row.on_grid_fields_dict.buying_price.set_value(r.message[1] || 0);
+                                    this.grid_row.on_grid_fields_dict.rate.set_value(r.message[0] || 0);
+
+                                }
+                            })
+                        }
+        });
 	dialog.show();
 }
 

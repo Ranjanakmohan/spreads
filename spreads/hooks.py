@@ -33,7 +33,7 @@ app_license = "MIT"
 # include js in doctype views
 doctype_js = {
 	"Quotation" : "public/js/quotation.js",
-	"Sales Order" : "public/js/sales_order.js",
+	# "Sales Order" : "public/js/sales_order.js",
 	"Sales Invoice" : "public/js/sales_invoice.js",
 	"Delivery Note" : "public/js/delivery_note.js",
 	"Item" : "public/js/item.js",
@@ -106,11 +106,11 @@ doc_events = {
 		"validate": "spreads.doc_events.utils.validate_raw_material",
 		"on_cancel": "spreads.doc_events.utils.cancel_doc",
 	},
-	"Sales Order": {
-		"on_submit": "spreads.doc_events.sales_order.on_submit_so",
-		"validate": "spreads.doc_events.utils.validate_raw_material",
-		"on_trash": "spreads.doc_events.sales_order.on_trash_so",
-	},
+	# "Sales Order": {
+	# 	"on_submit": "spreads.doc_events.sales_order.on_submit_so",
+	# 	"validate": "spreads.doc_events.utils.validate_raw_material",
+	# 	"on_trash": "spreads.doc_events.sales_order.on_trash_so",
+	# },
 	"Quotation": {
 		"validate": "spreads.doc_events.utils.validate_raw_material",
 	},
@@ -215,22 +215,13 @@ fixtures = [
                     "Quotation-raw_material",
                     "Delivery Note-raw_material",
                     "Item-assembled_item",
-                    "Sales Order-cost_center",
                     "Sales Invoice-raw_material",
-                    "Sales Order-raw_material",
                     "Cost Center-sales_order",
                     "Global Defaults-default_cost_center",
-                    "Sales Order-new_project_code",
-                    "Sales Order-existing_project_code",
                     "Quotation-price_list",
-                    "Sales Order-generate_project_id",
-                    "Sales Order-rate_of_materials_based_on",
-                    "Sales Order-update_available_stock",
-                    "Sales Order-price_list",
                     "Delivery Note-cost_center",
 
                     "Quotation Item-is_service_item",
-                    "Sales Order Item-is_service_item",
                     "Sales Invoice Item-is_service_item",
                     "Delivery Note Item-is_service_item",
 
@@ -251,10 +242,6 @@ fixtures = [
 					"Quotation-total_raw_material_expense",
 					"Quotation-section_break_902",
 
-					"Sales Order-column_break_901",
-					"Sales Order-total_raw_material_expense",
-					"Sales Order-section_break_902",
-
 					"Sales Invoice-column_break_901",
 					"Sales Invoice-total_raw_material_expense",
 					"Sales Invoice-section_break_902",
@@ -265,23 +252,12 @@ fixtures = [
 
 					"Quotation-column_break_37",
 
-					"Sales Order-update_serial_no",
-					"Sales Order-section_break_333",
-					"Sales Order-section_break_3333",
-					"Sales Order-column_break_222",
 
-					"Sales Order-estimated_other_expense",
-					"Sales Order-estimated_labor_expense",
-					"Sales Order-estimated_transportation_expense",
-					"Sales Order-estimated_admin_expense",
-					"Sales Order-estimated_total_expense",
 					"Employee-petty_cash_account",
 					"Journal Entry-petty_cash_request",
 
 					"Quotation-raw_material_profit",
 					"Quotation-total_raw_material_buying_expense",
-					"Sales Order-raw_material_profit",
-					"Sales Order-total_raw_material_buying_expense",
 				]
 			]
 		]

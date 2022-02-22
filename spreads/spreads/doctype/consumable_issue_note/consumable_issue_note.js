@@ -1,0 +1,23 @@
+// Copyright (c) 2022, jan and contributors
+// For license information, please see license.txt
+
+frappe.ui.form.on('Consumable Issue Note', {
+	// refresh: function(frm) {
+
+	// }
+});
+frappe.ui.form.on('Consumable Issue Note Details', {
+	qty: function(frm) {
+        compute_total(cur_frm)
+	}
+});
+
+
+function compute_total(cur_frm) {
+    var total = 0
+    for(var x=0;x<cur_frm.doc.items.length;x+=1){
+        total += cur_frm.doc.items[x].amount
+    }
+    cur_frm.doc.total = total
+    cur_frm.refresh_field("total")
+}
