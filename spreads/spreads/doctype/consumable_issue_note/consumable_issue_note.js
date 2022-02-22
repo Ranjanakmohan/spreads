@@ -2,9 +2,25 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Consumable Issue Note', {
-	// refresh: function(frm) {
+	refresh: function(frm) {
+	    if(cur_frm.doc.docstatus && !cur_frm.doc.stock_entry){
+	          cur_frm.add_custom_button("Stock Entry", () => {
+               cur_frm.call({
+                  doc: cur_frm.doc,
+                  method: "generate_se",
+                  async:false,
+                  callback: function () {
+                      cur_frm.reload_doc()
+                        frappe.show_alert({
+                                    message: __('Stock Entry Created'),
+                                    indicator: 'green'
+                                }, 3);
+                  }
+              })
+            })
+        }
 
-	// }
+	}
 });
 frappe.ui.form.on('Consumable Issue Note Details', {
 	qty: function(frm, cdt, cdn) {

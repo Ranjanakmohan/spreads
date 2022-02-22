@@ -9,9 +9,12 @@
   "sales_order",
   "customer",
   "customer_name",
+  "cost_center",
+  "stock_entry",
   "column_break_4",
   "posting_date",
   "project_code",
+  "warehouse",
   "raw_material_items_section",
   "items",
   "section_break_9",
@@ -96,12 +99,31 @@
    "fieldtype": "Currency",
    "label": "Total",
    "read_only": 1
+  },
+  {
+   "fieldname": "warehouse",
+   "fieldtype": "Link",
+   "label": "Warehouse",
+   "options": "Warehouse"
+  },
+  {
+   "fieldname": "cost_center",
+   "fieldtype": "Link",
+   "label": "Cost Center",
+   "options": "Cost Center"
+  },
+  {
+   "fieldname": "stock_entry",
+   "fieldtype": "Link",
+   "label": "Stock Entry",
+   "options": "Stock Entry",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2022-02-22 08:44:48.073178",
+ "modified": "2022-02-22 09:32:22.713430",
  "modified_by": "Administrator",
  "module": "Spreads",
  "name": "Consumable Issue Note",

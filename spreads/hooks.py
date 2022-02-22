@@ -258,6 +258,7 @@ fixtures = [
 
 					"Quotation-raw_material_profit",
 					"Quotation-total_raw_material_buying_expense",
+					"Manufacturing Settings-difference_account",
 				]
 			]
 		]
