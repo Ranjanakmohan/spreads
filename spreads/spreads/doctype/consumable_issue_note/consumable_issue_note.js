@@ -7,7 +7,16 @@ frappe.ui.form.on('Consumable Issue Note', {
 	// }
 });
 frappe.ui.form.on('Consumable Issue Note Details', {
-	qty: function(frm) {
+	qty: function(frm, cdt, cdn) {
+	    var d = locals[cdt][cdn]
+        d.amount = d.qty * d.rate
+        cur_frm.refresh_field(d.parentfield)
+        compute_total(cur_frm)
+	},
+    rate: function(frm) {
+      var d = locals[cdt][cdn]
+        d.amount = d.qty * d.rate
+        cur_frm.refresh_field(d.parentfield)
         compute_total(cur_frm)
 	}
 });
