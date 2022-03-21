@@ -114,9 +114,11 @@ def generate_cc(name,customer):
 
 @frappe.whitelist()
 def on_submit_so(doc, method):
-    if not doc.cost_center and len(doc.raw_material) > 0:
+    if doc.existing_project_code and not doc.cost_center and doc.raw_material:
         frappe.throw("Please Select Existing or Generate Project Code")
 
+    if not doc.existing_project_code and not doc.cost_center:
+        frappe.throw("Please Select Existing or Generate Project Code")
 
 @frappe.whitelist()
 def make_mr(source_name, target_doc=None):
