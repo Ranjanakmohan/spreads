@@ -319,6 +319,9 @@ cur_frm.cscript.raw_material_add = function (frm, cdt, cdn) {
     d.warehouse = warehouse
     cur_frm.refresh_field("raw_material")
 }
+cur_frm.cscript.raw_material_remove = function (frm, cdt, cdn) {
+   total_raw_material(cur_frm)
+}
 cur_frm.cscript.estimated_admin_expense = function () {
     console.log("test")
     total_expenses(cur_frm)
