@@ -98,6 +98,8 @@ def on_trash_so(doc, method):
 def generate_cc(name,customer):
     parent_cc = frappe.get_value("Global Defaults", "Global Defaults", "default_cost_center")
     if parent_cc:
+        print("=====================================")
+        print("COST CENTEEEEEEEEEEER")
         obj = {
             "doctype": "Cost Center",
             "cost_center_name": customer + "-" + name,
